@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <main class="claims-summary-main-content">
+        <div
+            is="finys-nested-grid"
+            data-finys-label="Reserves"
+            data-finys-tag="headerTagValue"
+            data-finys-header-buttons="
+                <button is='finys-button' data-bind='click: clickAddReserve'>Add Reserve</button>
+                <button is='finys-button' data-bind='click: clickEditReserve'>Edit Reserve</button>
+            "
+            data-columns="[
+                { 
+                    field: 'Id',
+                    title: '#',
+                    width: '50px',
+                    template: '<div class=\'f-number-tag\'>#=Id#</div>'                    
+                },
+                { 
+                    'field': 'Claimant', 
+                    template: '<a href=\'\\\\#\'>#=Claimant#</a>'
+                },
+                { 'field': 'CoveredItem', title: 'COVERED ITEM'},
+                {
+                    field: 'Adjuster', 
+                    template: vm.getAdjusterTemplate
+                },
+                { 'field': 'Coverage' },
+                { 'field': 'Cause' },
+                { 
+                    field: 'Actions', 
+                    template: kendo.template($('#dropdown-button-template').html()),
+                },
+            ]"
+            data-bind="source: dummyData,
+                        events: {
+                            detailInit: initDetail
+                        }"
+        >
+            <div
+                is="finys-nested-grid"
+                data-toolbar="null"
+                data-columns="[
+                    { field: 'Group' },
+                    { 
+                      field: 'Reserved',
+                      format: '{0:c}'
+                    },
+                    { 
+                        field: 'Paid',
+                        format: '{0:c}'
+                    },
+                    { 
+                        field: 'Incurred',
+                        format: '{0:c}'
+                    },
+                    { field: 'Status' },
+                ]"
+                data-bind="source: otherDummyData, events: { detailInit: initDetail }"
+            >
+                <div
+                    is="finys-grid"
+                    data-toolbar="null"
+                    data-columns="[
+                        { field: 'Group' },
+                        { field: 'Reserved' },
+                        { field: 'Paid' },
+                        { field: 'Incurred' },
+                        { field: 'Status' },
+                    ]"
+                    data-bind="source: anotherDummyData"
+                >
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+<script>
+    window.vm = kendo.observable({
+        initDetail: function(e) {
+            kendo.bind($(e.detailRow), this)
+        },
+        headerTagValue: '16 total',
+        clickAddReserve: function() {
+            console.log('click add reserve')
+        },
+        clickEditReserve: function() {
+            console.log('click edit reserve');
+        },
+        dummyData: new kendo.data.DataSource({
+            data: [
+                {
+                    Id: 1,
+                    Claimant: 'Brianne Test',
+                    CoveredItem: 'Policy',
+                    Adjuster: { name: 'Rajesh Prabhu', avatar: 'RP'},
+                    Coverage: 'Equipment Breakdown Limit (Pro)',
+                    Cause: '🔥 Fire',
+                },
+                {
+                    Id: 2,
+                    Claimant: 'John Doe',
+                    CoveredItem: 'An Item Here',
+                    Adjuster: { name: 'Aaron Schulz', avatar: 'AS'},
+                    Coverage: 'Covering this stuff',
+                    Cause: '🌪️ Hurricane',
+                },
+                {
+                    Id: 3,
+                    Claimant: 'Jane Doe',
+                    CoveredItem: 'Different Item',
+                    Adjuster: { name: 'Savitha Krishna-Murthy', avatar: 'SK'},
+                    Coverage: 'Another Example Coverage',
+                    Cause: '💰 Theft',
+                }
+            ]
+        }),
+        otherDummyData: new kendo.data.DataSource({
+            data: [
+                {
+                    Id: 1,
+                    Group: 'Indemnity',
+                    Reserved: 99800,
+                    Paid: 200,
+                    Incurred: 10000,
+                    Status: 'Open',
+                },
+            ]
+        }),
+        anotherDummyData: new kendo.data.DataSource({
+            data: [
+                {
+                    Id: 1,
+                    Group: 'Indemnity',
+                    Reserved: '99800',
+                    Paid: "200",
+                    Incurred: '10000',
+                    Status: 'Open',
+                },
+            ]
+        }),
+        getAdjusterTemplate: function (row) {
+            return `<span class='f-avatar' data-text='${row.Adjuster.avatar}'></span><span>${row.Adjuster.name}</span>`
+        },
+    })
+    
+    $(document).ready(() => {
+        kendo.bind($('main'), vm);
+        $('.f-avatar').each((index, element) => {
+            $(element).kendoAvatar({
+                type: 'text',
+                text: $(element).data('text'),
+            })
+        })
+        $('.f-generated-template').each((i, element) => {
+            kendo.bind($(element), window.vm)
+        })
+    })
+</script>
+
+<script id="dropdown-button-template" type="text/x-kendo-template">
+    <button 
+        class='f-button f-action-tag' 
+        data-role="dropdownbutton"
+        data-items='[
+                        { id: "keep-text", text: "Keep Text Only", icon: "clipboard-text", click: function(e) { kendoConsole.log("event :: click \#" + $(e.currentTarget).attr("id")); }},
+                        { id: "paste-html", text: "Paste as HTML", icon: "clipboard-code", click:function(e){ kendoConsole.log("event :: click \#" + $(e.currentTarget).attr("id")); }},
+                        { id: "paste-markdown", text: "Paste Markdown", icon: "clipboard-markdown", click: function(e) { kendoConsole.log("event :: click \#" + $(e.currentTarget).attr("id")); }},
+                        { id: "paste-default", text: "Set Default Paste", click: function(e){ kendoConsole.log("event :: click \#" + $(e.currentTarget).attr("id"));  } }
+                    ]'
+    >
+        <div class='f-button-content'><i class='ph ph-dots-three-vertical'></i></div>
+    </button>
+</script>
+</html>
+
+

@@ -1,0 +1,88 @@
+:root {
+    /* Colors */
+    /* Neutrals */
+    --neutral-white: #FFFFFF;
+    --neutral-ultra-light: #F7F8F9;
+    --neutral-lightest: #F2F2F2;
+    --neutral-lighter: #D8D9DA;
+    --neutral-light: #B2B4B5;
+    --neutral: #75787A;
+    --neutral-dark: #333A40;
+    --neutral-darker: #1E2328;
+    --neutral-darkest: #191E23;
+  
+    /* Primary */
+    --primary-lightest: #e5f0fb;
+    --primary-lighter: #cce1f7;
+    --primary-light: #4c98e5;
+    --primary: #006ddb;
+    --primary-dark: #0057af;
+    --primary-darker: #002b57;
+    --primary-darkest: #002041;
+
+    /* Secondary*/
+    --secondary-lightest: #e5e9ee;
+    --secondary-lighter: #ccd4de;
+    --secondary-light: #4C6B8C;
+    --secondary: #002C5B;
+    --secondary-dark: #002348;
+    --secondary-darker: #001124;
+    --secondary-darkest: #000D1B;
+
+    /* Success */
+    --success-lightest: #e9f4f2;
+    --success-lighter: #d3eae6;
+    --success-light: #66b7aa;
+    --success: #259986;
+    --success-dark: #1d7a6b;
+    --success-darker: #0e3d35;
+    --success-darkest: #0B2D28;
+
+    /* Alert */
+    --alert-lightest: #fff6e5;
+    --alert-lighter: #FFEDCC;
+    --alert-light: #ffc14c;
+    --alert: #ffa700;
+    --alert-dark: #cc8500;
+    --alert-darker: #664200;
+    --alert-darkest: #4c3200;
+
+      /* Error */
+    --error-lightest: #fdebef;
+    --error-lighter: #fcd8df;
+    --error-light: #f7788f;
+    --error: #f43f5f;
+    --error-dark: #C3324C;
+    --error-darker: #611926;
+    --error-darkest: #49121c;
+
+
+    --header-gradient: linear-gradient(365deg, hsla(211, 100%, 18%, 1) 0%, hsla(212, 96%, 19%, 1) 17%, hsla(213, 93%, 21%, 1) 39%, hsla(214, 90%, 23%, 1) 62%, hsla(215, 87%, 25%, 1) 78%, hsla(216, 83%, 28%, 1) 100%);
+
+    /* Padding */
+    --large-padding: 0.75rem 1.25rem; /* 12px 20px */
+    --medium-padding: 0.5rem 1rem; /* 8px 16px */
+    --small-padding: 0.375rem 0.75rem; /* 8px 12px */
+    --xsmall-padding: 0.25rem; /* 4px 4px */
+
+    /* Font Sizes */
+    --font-size-xxlarge: 1.25rem;
+    --font-size-xlarge: 1.125rem;
+    --font-size-default: 1rem;
+    --font-size-medium: 0.875rem;
+    --font-size-small: 0.75rem;
+    --font-size-tiny: 0.625rem;
+
+    /* Font Weight */
+    --font-weight-100: 100;
+    --font-weight-200: 200;
+    --font-weight-300: 300;
+    --font-weight-400: 400;
+    --font-weight-500: 500;
+    --font-weight-600: 600;
+    --font-weight-700: 700;
+    --font-weight-800: 800;
+
+    /* Border Radius */
+    --standard-border-radius: 0.375rem; /* 6px */
+  }

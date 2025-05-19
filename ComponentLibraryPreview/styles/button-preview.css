@@ -1,0 +1,33 @@
+/* finys-button-preview.screen.active {
+    display: grid;
+    height: 100%;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 5rem 1fr 1fr;
+    grid-auto-flow: column;
+    justify-items: center;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+finys-button-preview > .f-button {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+} */
+
+finys-button-controls {
+    /* width: 100%; */
+    grid-column: 1 / 4;
+    grid-row: 1 / 2;
+    display: flex;
+    gap: 2rem;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+finys-button-controls > section {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-start;
+    align-items: center;
+}
+

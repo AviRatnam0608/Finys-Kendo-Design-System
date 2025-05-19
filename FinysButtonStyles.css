@@ -1,0 +1,88 @@
+/* ---------------------------------------------- Generic ------------------------------------------------- */
+.f-button {
+    border: 0.0625em solid transparent;
+    border-radius: 7.5rem;
+    font-weight: 600;
+    padding: 0.625em 1.25em;
+    box-shadow: 0 0.0625rem 0.125rem 0 #0000000D;
+    background: 
+        linear-gradient(0deg, var(--neutral-lightest), var(--neutral-lightest)) padding-box,
+        linear-gradient(0deg, rgba(19, 21, 25, 0.3) 0%, rgba(97, 107, 127, 0.21) 100%) border-box;
+    cursor: pointer;
+}
+
+.f-button:hover {
+    background: 
+        linear-gradient(0deg, var(--neutral-lighter), var(--neutral-lighter)) padding-box,
+        linear-gradient(0deg, rgba(19, 21, 25, 0.3) 0%, rgba(97, 107, 127, 0.21) 100%) border-box;
+}
+
+.f-button:hover > .f-button-content {
+    background: var(--neutral-lighter);
+}
+
+/* ---------------------------------------------- Button Types --------------------------------------------- */
+/* ---------------------------------------------- Primary ------------------------------------------------- */
+.f-button-primary {
+    background: 
+        linear-gradient(0deg, var(--primary), var(--primary)) padding-box,
+        linear-gradient(0deg, #0b3867 0%, #0552a0 100%) border-box;
+    color: var(--neutral-white);
+}
+
+.f-button-primary:hover {
+    background: 
+        linear-gradient(0deg, var(--primary-dark), var(--primary-dark)) padding-box,
+        linear-gradient(0deg, #0b3056 0%, #054381 100%) border-box;
+    color: var(--neutral-white);
+}
+
+/* ---------------------------------------------- Secondary ------------------------------------------------- */
+.f-button.f-button-secondary {
+    /* dont need to do anything */
+}
+
+.f-button.f-button-secondary:hover {
+    /* dont need to do anything */
+}
+
+/* ---------------------------------------------- Tertiary ------------------------------------------------- */
+.f-button-tertiary {
+    background-color: transparent;
+    background: transparent;
+    box-shadow: none;
+}
+
+.f-button-tertiary:hover {
+    background: var(--primary-lightest);
+    border: 0.0625em solid transparent;
+}
+
+/* ---------------------------------------------- Destructive ------------------------------------------------- */
+.f-button-destructive{
+    background: var(--error);
+    color: var(--neutral-white);
+    border: 1px solid #c3334e;
+}
+
+.f-button-destructive:hover {
+    background: var(--error-dark);
+    border: 1px solid #9c293f;
+}
+
+/* ---------------------------------------------- Button Sizes ------------------------------------------------- */
+.f-button.f-button-large {
+    font-size: var(--font-size-default);
+}
+
+.f-button.f-button-medium {
+    font-size: var(--font-size-medium);
+}
+
+.f-button.f-button-small {
+    font-size: var(--font-size-small);
+}
+
+.f-button.f-button-xsmall {
+    font-size: var(--font-size-tiny);
+}

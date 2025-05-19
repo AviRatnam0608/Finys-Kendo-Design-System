@@ -1,0 +1,35 @@
+finys-feature-preview.screen.active {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 0.5fr 1.5fr 1fr 1fr;
+    height: 100%;
+}
+
+finys-feature-preview finys-feature-controls {
+    width: 100%;
+    grid-column: 1 / 4;
+    grid-row: 1 / 2;
+}
+
+finys-feature-preview .finys-feature {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.finys-feature.f-full-width {
+    grid-column: 1 / 4;
+    display: block;
+}
+
+finys-code-viewer {
+    grid-column: 1 / 4;
+    grid-row: 3 / 4;
+    justify-self: stretch;
+}
+
+dropdown-preview {
+    width: 100%;
+}
