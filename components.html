@@ -563,23 +563,12 @@
     console.log(obj);
     kendo.bind($("body"), vm);
 
-    //text inputs
-    $("#textbox").kendoTextBox({
-      value: "John Smith",
-      clearButton: true,
-    });
-    $("#textbox2").kendoTextBox({
-      value: "",
-      clearButton: true,
-    });
+
     $("#finys-text-input-container")
       .kendoValidator()
       .data("kendoValidator")
       .validateInput($("input[name=username]"));
 
-    $("#maskedtextbox").kendoMaskedTextBox({
-      mask: "(000) 000-0000",
-    });
 
     createFinysDatePicker("datepicker");
   });
