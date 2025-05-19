@@ -21,6 +21,13 @@
     background: var(--neutral-lighter);
 }
 
+.f-button:has(i) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+}
+
 /* ---------------------------------------------- Button Types --------------------------------------------- */
 /* ---------------------------------------------- Primary ------------------------------------------------- */
 .f-button-primary {

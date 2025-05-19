@@ -176,16 +176,17 @@ class FinysToggle extends HTMLInputElement {
         super();
         this.vm = window[this.getAttribute('viewModel')] || kendo.observable({
             isEnabled: true,
-            isChecked: true,
-            onChange: function() {},
+            isChecked: false,
         })
     }
 
     connectedCallback() {
-        this.classList.add('f-toggle-switch');
+        this.classList.add(
+            'f-toggle-switch',
+            'f-toggle-small'
+        );
         this.setAttribute('data-role', 'switch');
-        this.setAttribute('data-bind', 'enabled: isEnabled, checked: isChecked, events: { change: onChange }');
-        kendo.bind(this, this.vm);
+        this.setAttribute('data-bind', 'checked: isChecked, events: {change: onChange}');
     }
 }
 

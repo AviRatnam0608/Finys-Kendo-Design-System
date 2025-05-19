@@ -94,26 +94,26 @@ class DropdownPreview extends HTMLElement {
                   },
                 ],
                 group: { field: "group" },
-              }),
-              templatedListData: new kendo.data.DataSource({
-                data: [{
-                  id: 1,
-                  AgentCode: "AgentCode",
-                  AgentName: 'AgentName',
-                  AgencyCode: 'AgencyCode',
-                  AgencyName: 'AgencyName',
-                  Address: 'Address'
-                },
-                {
-                  id: 2,
-                  AgentCode: "50012",
-                  AgentName: 'Michael Jordan',
-                  AgencyCode: '82134',
-                  AgencyName: 'Jordan Agency',
-                  Address: '123 Sycamore St, NJ, USA, 78123'
-                }
-                ],
-              }),
+            }),
+            templatedListData: new kendo.data.DataSource({
+              data: [{
+                id: 1,
+                AgentCode: "AgentCode",
+                AgentName: 'AgentName',
+                AgencyCode: 'AgencyCode',
+                AgencyName: 'AgencyName',
+                Address: 'Address'
+              },
+              {
+                id: 2,
+                AgentCode: "50012",
+                AgentName: 'Michael Jordan',
+                AgencyCode: '82134',
+                AgencyName: 'Jordan Agency',
+                Address: '123 Sycamore St, NJ, USA, 78123'
+              }
+              ],
+            }),
         })
     }
 

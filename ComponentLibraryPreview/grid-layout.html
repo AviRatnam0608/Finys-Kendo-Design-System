@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html {
+            height: 100%;
+        }
+
+        html body>* {
+            height: 100%;
+            width: 100%;
+            text-align: center;
+        }
+
+        body {
+            display: grid;
+            grid-template-columns: [header-start breadcrumb-start module-header-start sidebar-start] 0fr [sidebar-end alerts-start content-start] 1fr [header-end breadcrumb-end module-header-end alerts-end content-end];
+            grid-template-rows: [header-start] 0fr [header-end breadcrumb-start] 0fr [breadcrumb-end module-header-start] 0fr [module-header-end sidebar-start alerts-start] 0fr [alerts-end content-start] 1fr [sidebar-end content-end];
+            height: 100%;
+            margin: 0;
+        }
+
+        .main-header {
+            grid-area: header;
+        }
+
+        .breadcrumb {
+            grid-area: breadcrumb;
+        }
+
+        .module-header {
+            grid-area: module-header
+        }
+
+        .sidebar {
+            grid-area: sidebar;
+            /* margin-right: 6px; */
+        }
+
+        .alerts {
+            grid-area: alerts
+        }
+
+        .content {
+            grid-area: content
+        }
+
+        .scrim {
+            width: 100%;
+            background-color: #00050B8C;
+            grid-row: alerts-start / content-end;
+            grid-column: sidebar-start / content-end;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="main-header" style="
+    background-color: green;
+">Main Header</header>
+    <div class="breadcrumb" style="
+    background-color: pink;
+">Breadcrumb</div>
+    <header class="module-header" style="
+    background-color: antiquewhite;
+">Module Header</header>
+    <nav class="sidebar" style="
+    background-color: brown;
+">Sidebar</nav>
+    <div class="alerts" style="
+    background-color: cadetblue;
+">Alerts</div>
+
+    <main class="content" style="
+    background: darkmagenta;
+">Main Content</main>
+    <!-- <aside class="scrim">Tasks!</aside> -->
+   
+
+</body>
+
+</html>

@@ -33,6 +33,8 @@ class FinysFeaturePreview extends HTMLElement {
             </div>
             <finys-code-viewer></finys-code-viewer>
         `
+        const toggle = document.querySelector('input.f-toggle-switch');
+        kendo.bind(toggle, toggle.vm);
     }
 
     renderDropdownView() {

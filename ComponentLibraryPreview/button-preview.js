@@ -118,19 +118,18 @@ class FinysButtonControls extends HTMLElement {
     }
 
     createIconToggle() {
-            this.iconToggle = document.createElement('input', { is: 'finys-toggle' });
-            this.iconToggle.setAttribute('id', 'toggle-icon');
-            this.iconToggle.vm.set('isChecked', false);
-            this.iconToggle.vm.onChange = function(e) {
-                const buttonPreview = document.querySelector('button-preview');
-                if(e.checked) {
-                    buttonPreview.setIconContent('Action');
-                } else {
-                    buttonPreview.setContent('Action')
-                }
+        this.iconToggle = document.createElement('input', { is: 'finys-toggle' });
+        this.iconToggle.setAttribute('id', 'toggle-icon');
+        this.iconToggle.vm.set('onChange',  function(e) {
+            const buttonPreview = document.querySelector('button-preview');
+            if(e.checked) {
+                buttonPreview.setIconContent('Action');
+            } else {
+                buttonPreview.setContent('Action')
             }
-            return this.iconToggle;
-        }
+        })
+        return this.iconToggle;
+    }
         
         
 
@@ -185,6 +184,16 @@ class ButtonPreview extends HTMLElement {
         this.button.classList.add(`f-button-${state}`);
         this.unattachedButton.classList.add(`f-button-${state}`);
         this.updateCodeViewer();
+    }
+
+    setIconContent(content) {
+        this.button.innerHTML = `
+            <i class="ph ph-plus"></i><span>${content}</span>
+        `
+    }
+
+    setContent(content) {
+        this.button.innerHTML = content;
     }
 
     updateCodeViewer() {
