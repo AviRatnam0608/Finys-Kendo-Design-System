@@ -171,6 +171,26 @@ class FinysNestedGrid extends FinysGrid {
     }
 }
 
+class FinysToggle extends HTMLInputElement {
+    constructor() {
+        super();
+        this.vm = window[this.getAttribute('viewModel')] || kendo.observable({
+            isEnabled: true,
+            isChecked: true,
+            onChange: function() {},
+        })
+    }
+
+    connectedCallback() {
+        this.classList.add('f-toggle-switch');
+        this.setAttribute('data-role', 'switch');
+        this.setAttribute('data-bind', 'enabled: isEnabled, checked: isChecked, events: { change: onChange }');
+        kendo.bind(this, this.vm);
+    }
+}
+
+
+customElements.define('finys-toggle', FinysToggle, {extends: 'input'})
 customElements.define('finys-timepicker', FinysTimePicker, {extends: 'input'})
 customElements.define('finys-dropdownlist', FinysDropDownList, {extends: 'input'})
 customElements.define('finys-detailed-dropdownlist', FinysDetailedDropDownList, {extends: 'input'})

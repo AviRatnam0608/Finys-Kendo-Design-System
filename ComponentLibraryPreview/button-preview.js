@@ -22,6 +22,7 @@ class FinysButtonControls extends HTMLElement {
             this.createSetSecondaryButton(),
             this.createSetTertiaryButton(),
             this.createSetDestructiveButton(),
+            this.createIconToggle(),
         ])
         this.constructor.appendChildren(this, [
             this.buttonContainer1,
@@ -115,6 +116,23 @@ class FinysButtonControls extends HTMLElement {
         this.registerClickListener(this.destructiveBtn, this.setButtonColor('destructive'))
         return this.destructiveBtn;
     }
+
+    createIconToggle() {
+            this.iconToggle = document.createElement('input', { is: 'finys-toggle' });
+            this.iconToggle.setAttribute('id', 'toggle-icon');
+            this.iconToggle.vm.set('isChecked', false);
+            this.iconToggle.vm.onChange = function(e) {
+                const buttonPreview = document.querySelector('button-preview');
+                if(e.checked) {
+                    buttonPreview.setIconContent('Action');
+                } else {
+                    buttonPreview.setContent('Action')
+                }
+            }
+            return this.iconToggle;
+        }
+        
+        
 
     destroy() {
         this.registeredListeners.forEach((func) => {
