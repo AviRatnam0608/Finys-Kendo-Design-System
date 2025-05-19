@@ -190,10 +190,14 @@ class ButtonPreview extends HTMLElement {
         this.button.innerHTML = `
             <i class="ph ph-plus"></i><span>${content}</span>
         `
+        this.unattachedButton.innerHTML = this.button.innerHTML
+        this.updateCodeViewer();
     }
 
     setContent(content) {
         this.button.innerHTML = content;
+        this.unattachedButton.innerHTML = this.button.innerHTML
+        this.updateCodeViewer();
     }
 
     updateCodeViewer() {
