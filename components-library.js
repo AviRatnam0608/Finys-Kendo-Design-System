@@ -190,6 +190,16 @@ class FinysToggle extends HTMLInputElement {
 }
 
 
+class FinysTextBox extends HTMLInputElement {
+    constructor() {
+        super();
+    }
+
+    connectedCallback() {
+        this.setAttribute('data-role', 'textbox');
+    }
+}
+
 customElements.define('finys-toggle', FinysToggle, {extends: 'input'})
 customElements.define('finys-timepicker', FinysTimePicker, {extends: 'input'})
 customElements.define('finys-dropdownlist', FinysDropDownList, {extends: 'input'})
@@ -197,3 +207,4 @@ customElements.define('finys-detailed-dropdownlist', FinysDetailedDropDownList, 
 customElements.define('finys-nested-grid', FinysNestedGrid, {extends:  'div'})
 customElements.define('finys-grid', FinysGrid, {extends:  'div'})
 customElements.define('finys-button', FinysButton, {extends: 'button'})
+customElements.define('finys-text-box', FinysTextBox, {extends: 'input'})
