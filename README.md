@@ -12,9 +12,9 @@ The goal of this system is to provide a consistent, scalable, and reusable compo
 - 
 ## Tech Stack
 
-- Kendo UI (jQuery / Angular / React) – [adjust as needed]
-- SCSS / CSS Variables for styling and theming
-- Optional: Storybook for documentation and component previews
+- Kendo UI (jQuery)
+- CSS Variables for styling and theming
+- Internally made Storybook for documentation and component previews
 
 ## Component Checklist
 
