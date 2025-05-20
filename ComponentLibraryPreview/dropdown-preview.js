@@ -1,18 +1,3 @@
-kendo.data.binders.widget.isSelected = kendo.data.Binder.extend({
-    refresh: function () {
-      const value = this.bindings["isSelected"].get();
-      if (!value?.id) {
-        $(this.element.element)
-          .closest(".f-dropdown.k-picker")
-          .removeClass("f-selected");
-      } else {
-        $(this.element.element)
-          .closest(".f-dropdown.k-picker")
-          .addClass("f-selected");
-      }
-    },
-  });
-
 class DropdownPreview extends HTMLElement {
     constructor() {
         super();

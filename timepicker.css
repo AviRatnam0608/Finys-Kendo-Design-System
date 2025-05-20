@@ -56,6 +56,19 @@
     background-color: var(--neutral-lighter);
 }
 
+span.f-timepicker.f-selected > input.f-timepicker,
+span.f-timepicker.f-selected > button.k-input-button.k-button-solid {
+    background-color: var(--neutral-white);
+}
+
+span.f-timepicker.f-selected > button.k-input-button.k-button-solid:hover {
+    background-color: var(--neutral-white);
+}
+
+span.f-timepicker > input.f-timepicker {
+    font-weight: 500;
+}
+
 .k-popup:has(.k-timeselector) {
     border-radius: 0.375rem;
     margin-top: 0.5rem;
