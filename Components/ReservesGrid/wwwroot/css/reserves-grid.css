@@ -86,18 +86,21 @@ main.claims-summary-main-content .f-table-header {
     border-radius: 4.875rem;
 }
 
-.f-action-tag {
-    background-color: #F6F6F6;
-    border: 0.0625rem solid #1315191A;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
+.f-context-menu {
     background-color: var(--neutral-lightest);
+    border-radius: 50%;
+    padding: 0;
+    width: 2.75em;
+    height: 2.75em;
 }
 
-.f-action-tag:hover {
+.f-context-menu:hover {
     background-color: var(--neutral-lighter);
     color: var(--neutral-darkest)
+}
+
+.f-context-menu i {
+    font-size: 1.25em;
 }
 
 .f-clickable {

@@ -168,16 +168,14 @@
 
 <script id="dropdown-button-template" type="text/x-kendo-template">
     <button 
-        class='f-button f-action-tag' 
-        data-role="dropdownbutton"
+        is='finys-context-menu'
         data-items='[
-                        { id: "keep-text", text: "Keep Text Only", icon: "clipboard-text", click: function(e) { kendoConsole.log("event :: click \#" + $(e.currentTarget).attr("id")); }},
-                        { id: "paste-html", text: "Paste as HTML", icon: "clipboard-code", click:function(e){ kendoConsole.log("event :: click \#" + $(e.currentTarget).attr("id")); }},
-                        { id: "paste-markdown", text: "Paste Markdown", icon: "clipboard-markdown", click: function(e) { kendoConsole.log("event :: click \#" + $(e.currentTarget).attr("id")); }},
-                        { id: "paste-default", text: "Set Default Paste", click: function(e){ kendoConsole.log("event :: click \#" + $(e.currentTarget).attr("id"));  } }
-                    ]'
+            { id: "keep-text", text: "Keep Text Only", icon: "clipboard-text", click: function(e) { kendoConsole.log("event :: click \#" + $(e.currentTarget).attr("id")); }},
+            { id: "paste-html", text: "Paste as HTML", icon: "clipboard-code", click:function(e){ kendoConsole.log("event :: click \#" + $(e.currentTarget).attr("id")); }},
+            { id: "paste-markdown", text: "Paste Markdown", icon: "clipboard-markdown", click: function(e) { kendoConsole.log("event :: click \#" + $(e.currentTarget).attr("id")); }},
+            { id: "paste-default", text: "Set Default Paste", click: function(e){ kendoConsole.log("event :: click \#" + $(e.currentTarget).attr("id"));  } }
+        ]'
     >
-        <div class='f-button-content'><i class='ph ph-dots-three-vertical'></i></div>
     </button>
 </script>
 </html>

@@ -188,6 +188,15 @@ class FinysToggle extends HTMLInputElement {
     }
 }
 
+class FinysContextMenu extends HTMLButtonElement {
+    connectedCallback() {
+        this.classList.add('f-context-menu')
+        this.setAttribute('data-role', 'dropdownbutton');
+        this.innerHTML = `
+            <i class="ph ph-dots-three-vertical"></i>
+        `
+    }
+}
 
 class FinysTextBox extends HTMLInputElement {
     constructor() {
@@ -199,6 +208,8 @@ class FinysTextBox extends HTMLInputElement {
     }
 }
 
+
+customElements.define('finys-context-menu', FinysContextMenu, {extends: 'button'})
 customElements.define('finys-toggle', FinysToggle, {extends: 'input'})
 customElements.define('finys-timepicker', FinysTimePicker, {extends: 'input'})
 customElements.define('finys-dropdownlist', FinysDropDownList, {extends: 'input'})
