@@ -173,11 +173,15 @@ span.f-timepicker > input.f-timepicker {
     width: 2.5rem;
     height: 1.25rem;
     border-radius: 0.375rem;
-    left: 0.75rem;
+    left: 0.5rem;
     top: 0.225rem;
     box-shadow: 3.5rem 0 0 0 var(--primary-lighter), 7rem 0 0 0 var(--primary-lighter);
 }
 
 .k-time-list-container {
     font-weight: 500;
+}
+
+.k-time-container>ul {
+    margin: 0;
 }
