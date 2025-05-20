@@ -128,8 +128,6 @@ class FinysGrid extends HTMLDivElement {
                 </div>
                 <div class="f-table-header-group">
                     ${this.getAttribute('data-finys-header-buttons') || ''}
-                    <button class='f-button f-clickable'><div class='f-button-content'><i class="ph ph-plus"></i><span>Add Reserve</span></div></button>
-                    <button class='f-button f-clickable'><div class='f-button-content'><i class="ph ph-pencil-simple-line"></i><span>Edit Reserve</span></div></button>
                 </div>
             </header>
         `
