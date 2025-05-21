@@ -1,0 +1,70 @@
+.k-stepper .k-step.k-step-current .k-step-indicator::after {
+  display: none;
+}
+
+.k-stepper .k-step-indicator {
+  border: 2px solid var(--neutral-lighter);
+  background-color: var(--neutral-white);
+}
+
+.k-stepper .k-step-indicator-text {
+  font-family: "Phosphor" !important;
+  color: transparent;
+}
+
+.k-stepper .k-step-current .k-step-indicator {
+  background-color: var(--neutral-white);
+  border-color: var(--primary);
+}
+
+.k-stepper .k-step-current .k-step-indicator .k-icon {
+  font-family: "Phosphor" !important;
+}
+
+.k-stepper .k-step-current .k-step-indicator .k-icon::before {
+  font-family: "Phosphor" !important;
+  content: "\e182";
+}
+
+.k-stepper .k-step-current .k-step-indicator .k-icon svg {
+  display: none;
+}
+
+.k-stepper .k-step-done .k-step-indicator {
+  background-color: var(--success);
+  border-color: var(--success-dark);
+}
+
+.k-stepper .k-step-done .k-step-indicator .k-icon {
+  font-family: "Phosphor" !important;
+}
+
+.k-stepper .k-step-done .k-step-indicator .k-icon::before {
+  font-family: "Phosphor" !important;
+  content: "\e182";
+}
+
+.k-stepper .k-step-done .k-step-indicator .k-icon svg {
+  display: none;
+}
+
+.k-step-current .k-step-indicator {
+  background-color: var(--primary)
+}
+
+.k-stepper .k-step-current:hover .k-step-indicator {
+  background-color: var(--neutral-white);
+}
+
+.k-stepper .k-step-done:hover .k-step-indicator {
+  background-color: var(--success);
+}
+
+.k-stepper .k-progressbar .k-selected.k-progressbar-value {
+  background-color: transparent;
+}
+
+.k-step-list-vertical ~ .k-progressbar {
+  left: 1rem;
+  background-color: transparent;
+}

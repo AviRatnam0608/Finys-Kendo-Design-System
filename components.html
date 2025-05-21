@@ -32,6 +32,7 @@
     href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" />
   <link rel="stylesheet" type="text/css"
     href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/light/style.css" />
+  <link rel="stylesheet" href="stepper.css">
   <style>
     /* transient styles */
     .my-dropdown {
@@ -278,6 +279,22 @@
                    visible: isVisible,
                    events: { dataBound: showGridCounter }" style="height: 400px"></div>
     </div>
+  </section>
+
+  <section>
+    <nav
+      data-role="stepper"
+      data-orientation="vertical"
+      data-label="true"
+      data-linear="false"
+      data-steps="[
+        { 'label': '1. Step One', 'selected': true },
+        { 'label': '2. Step Two',  },
+        { 'label': '3. Step Three' }
+      ]"
+    >
+      
+    </nav>
   </section>
 </body>
 
