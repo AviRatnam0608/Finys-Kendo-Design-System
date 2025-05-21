@@ -227,16 +227,17 @@ class FinysModalElement extends HTMLDivElement {
 
 class FinysModal {
     constructor(options = {}) {
-        (options.content || {}).template = [
-            options.content?.template(), 
-            options.isConfirm ? this.renderFooter() : null
-        ]
-            .filter(Boolean)
-            .join('')
+        const template = options.content?.template?.() || ''; 
         this.setOptions({
             draggable: false,
             ...options
         });
+        options.content.template = () => ([
+            template,
+            this.renderFooter(),
+        ]
+            .filter(Boolean)
+            .join(''))
         this.vm = kendo.observable({
             onCancel: () => this.onCancel(),
             onApply: () => this.onApply(),
@@ -252,9 +253,14 @@ class FinysModal {
     }
 
     renderFooter() {
-        if(this.options?.footer) return footer;
+        if(this.options?.footer) 
+            return `
+                <div class='f-modal-footer f-generated-template'>
+                    ${this.options.footer}
+                </div>
+        `;
         return `
-            <div class='f-actions f-generated-template'>
+            <div class='f-modal-footer f-generated-template'>
                 <button is="finys-button" data-bind="click: onCancel" class="f-button-tertiary">Cancel</button>
                 <button is="finys-button" data-bind="click: onApply" class="f-button-primary">Accept</button>
             </div>
@@ -271,7 +277,7 @@ class FinysModal {
         $(this.modalContainer).data('kendoWindow')
             .toFront()
             .center();
-        kendo.bind(this.modalContainer.querySelector('.f-actions.f-generated-template'), this.vm)
+        kendo.bind(this.modalContainer.querySelector('.f-modal-footer.f-generated-template'), this.vm)
             
     }
 

@@ -172,20 +172,20 @@
 
   .k-window-content > :first-child {
     flex: 1 0 0;
-    position: relative;
   }
 
-  .k-window-content > .f-actions {
+  .k-window-content > .f-modal-footer {
+    position: relative;
     display: flex;
     justify-content: flex-end;
     padding-top: 1em;
     gap: 0.5em;
   }
 
-  .k-window-content:not(.k-dialog-content):has(.f-actions) > *:first-child::after {
+  .k-window-content .f-modal-footer::before {
     content: '';
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: -1rem;
     right: -1rem;
     background-color: var(--primary-lightest);

@@ -148,21 +148,6 @@
       <button data-bind="click: showModalLarge">Show Large Modal</button>
       <button data-bind="click: showModalMedium">Show Medium Modal</button>
       <button data-bind="click: showModalSmall">Show Small Modal</button>
-      <div class="f-modal f-modal-large" data-role="dialog" data-title="Software Update" data-width="450"
-        data-actions="[{ text: 'Cancel', action: onRemind },{ text: 'Action', action: onInstall, primary: true }]"
-        data-modal="false"
-        data-content="<p>A new version of <strong>Kendo UI</strong> is available. Would you like to download and install it now?<p>"
-        data-bind="events: { close: onClose}"></div>
-      <div class="f-modal f-modal-medium" data-role="dialog" data-title="Software Update" data-width="450"
-        data-actions="[{ text: 'Cancel', action: onRemind },{ text: 'Action', action: onInstall, primary: true }]"
-        data-modal="false"
-        data-content="<p>A new version of <strong>Kendo UI</strong> is available. Would you like to download and install it now?<p>"
-        data-bind="dialogOpen: isModalMediumVisible, events: { close: onClose}"></div>
-      <div class="f-modal f-modal-small" data-role="dialog" data-title="Software Update" data-width="450"
-        data-actions="[{ text: 'Cancel', action: onRemind },{ text: 'Action', action: onInstall, primary: true }]"
-        data-modal="false"
-        data-content="<p>A new version of <strong>Kendo UI</strong> is available. Would you like to download and install it now?<p>"
-        data-bind="dialogOpen: isModalSmallVisible, events: { close: onClose}"></div>
     </div>
   </section>
   <hr />
@@ -362,16 +347,40 @@
       this.set("isModalEnabled", true);
     },
     showModalLarge: function (e) {
-      this.set("isModalLargeVisible", true);
-      this.set("isModalEnabled", false);
+      if(!this.largeModal) {
+        this.largeModal = new FinysModal({
+          title: 'whatever',
+          content: {template: () => '<div>this is some content</div>'},
+          width: '450px',
+          modal: true,
+          size: 'large',
+        });
+      }
+      this.largeModal.open();
     },
     showModalMedium: function (e) {
-      this.set("isModalMediumVisible", true);
-      this.set("isModalEnabled", false);
+      if(!this.mediumModal) {
+        this.mediumModal = new FinysModal({
+          title: 'whatever',
+          content: {template: () => '<div>this is some content</div>'},
+          width: '450px',
+          modal: true,
+          size: 'medium',
+        });
+      }
+      this.mediumModal.open();
     },
     showModalSmall: function (e) {
-      this.set("isModalSmallVisible", true);
-      this.set("isModalEnabled", false);
+      if(!this.smallModal) {
+        this.smallModal = new FinysModal({
+          title: 'whatever',
+          content: {template: () => '<div>this is some content</div>'},
+          width: '450px',
+          modal: true,
+          size: 'small',
+        });
+      }
+      this.smallModal.open();
     },
     listData: new kendo.data.DataSource({
       data: [
