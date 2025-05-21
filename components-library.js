@@ -218,7 +218,90 @@ class FinysMaskedTextBox extends HTMLInputElement {
 }
 
 
+class FinysModalElement extends HTMLDivElement {
+    connectedCallback() {
+        const size = this.getAttribute('size') || 'large'
+        this.classList.add('f-modal', `f-modal-${size}`);
+    }
+}
 
+class FinysModal {
+    constructor(options = {}) {
+        (options.content || {}).template = [
+            options.content?.template(), 
+            options.isConfirm ? this.renderFooter() : null
+        ]
+            .filter(Boolean)
+            .join('')
+        this.setOptions({
+            draggable: false,
+            ...options
+        });
+        this.vm = kendo.observable({
+            onCancel: () => this.onCancel(),
+            onApply: () => this.onApply(),
+        })
+    }
+
+    onCancel() {
+        this.close();
+    }
+
+    onApply() {
+        console.log('testing apply')
+    }
+
+    renderFooter() {
+        if(this.options?.footer) return footer;
+        return `
+            <div class='f-actions f-generated-template'>
+                <button is="finys-button" data-bind="click: onCancel" class="f-button-tertiary">Cancel</button>
+                <button is="finys-button" data-bind="click: onApply" class="f-button-primary">Accept</button>
+            </div>
+        `
+    }
+
+    create() {
+        this.modalContainer = document.createElement('div', {
+            is: "finys-modal-target"
+        });
+        this.modalContainer.setAttribute('size', this.options.size || 'medium');
+        document.querySelector('body').appendChild(this.modalContainer);
+        $(this.modalContainer).kendoWindow(this.options);
+        $(this.modalContainer).data('kendoWindow')
+            .toFront()
+            .center();
+        kendo.bind(this.modalContainer.querySelector('.f-actions.f-generated-template'), this.vm)
+            
+    }
+
+    setOptions(options) {
+        this.options = options;
+    }
+
+    getKendoModal() {
+        return $(this.modalContainer).data('kendoWindow');
+    }
+
+    close() {
+        this.getKendoModal().close();
+    }
+
+    open() {
+        if(!this.getKendoModal()) {
+            this.create();
+        } else {
+            this.getKendoModal().open();
+        }
+    }
+
+    destroy() {
+        this.getKendoModal().destroy();
+    }
+}
+
+
+customElements.define('finys-modal-target', FinysModalElement, {extends: 'div'})
 customElements.define('finys-context-menu', FinysContextMenu, {extends: 'button'})
 customElements.define('finys-toggle', FinysToggle, {extends: 'input'})
 customElements.define('finys-timepicker', FinysTimePicker, {extends: 'input'})
