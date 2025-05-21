@@ -207,6 +207,16 @@ class FinysTextBox extends HTMLInputElement {
         this.setAttribute('data-role', 'textbox');
     }
 }
+class FinysMaskedTextBox extends HTMLInputElement {
+    constructor() {
+        super();
+    }
+
+    connectedCallback() {
+        this.setAttribute('data-role', 'maskedtextbox');
+    }
+}
+
 
 
 customElements.define('finys-context-menu', FinysContextMenu, {extends: 'button'})
@@ -218,3 +228,5 @@ customElements.define('finys-nested-grid', FinysNestedGrid, {extends:  'div'})
 customElements.define('finys-grid', FinysGrid, {extends:  'div'})
 customElements.define('finys-button', FinysButton, {extends: 'button'})
 customElements.define('finys-text-box', FinysTextBox, {extends: 'input'})
+customElements.define('finys-masked-text-box', FinysMaskedTextBox, {extends: 'input'})
+

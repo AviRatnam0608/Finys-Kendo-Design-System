@@ -172,18 +172,29 @@
 
 
     <div class="input-container">
-      <label class="f-h-label">Name</label>
-      <input is="finys-text-box" />
+
+      <input data-label="Name" is="finys-text-box" />
     </div>
 
     <div class="input-container">
-      <label class="f-h-label">Name</label>
-      <input name="username" required class="k-invalid" is="finys-text-box"  />
+
+      <input disabled data-label="Name Disabled" is="finys-text-box" />
+    </div>
+
+    
+    <div class="input-container">
+
+      <input readonly data-label="Name read only" value="test" label is="finys-text-box" />
     </div>
 
     <div class="input-container">
-      <label class="f-h-label">Phone #</label>
-      <input placeholder="(___) ___-____"  is="finys-text-box" />
+
+      <input data-label="Name" name="username" required class="k-invalid" is="finys-text-box"  />
+    </div>
+
+    <div class="input-container">
+
+      <input data-label="Phone #" data-mask="(999) 000-0000" placeholder="(___) ___-____"  is="finys-masked-text-box" />
     </div>
     
   </section>
