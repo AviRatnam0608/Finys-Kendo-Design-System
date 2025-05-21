@@ -1,40 +1,48 @@
-const navBarMenuItems = [
-  {
-    label: "Accounts",
-    subitems: [
-      {
-        label: "Furniture",
-        subitems: [
-          {
-            label: "Tables & Chairs",
-            route: "www.youtube.com",
-          },
-          { label: "Sofas" },
-          { label: "Occasional Furniture" },
-          { label: "Childrens Furniture" },
-          { label: "Beds" },
-        ],
-      },
-    ],
-  },
-  {
-    label: "Reports",
-    subitems: [{ label: "Daily" }, { label: "Monthly" }, { label: "Annual" }],
-  },
-];
-
-const logoUrl =
-  "https://289umysog9.ufs.sh/f/k8fEief3SftoJw81KumkcXjto4vAEwiRkseDlPd29gSL81p5";
-
-const iconsList = [
-  "clock-counter-clockwise",
-  "star",
-  "f-divider",
-  "bell",
-  "gear",
-];
-
 class FNavBar extends HTMLElement {
+  static navBarMenuItems = [
+    {
+      label: "Accounts",
+      subitems: [
+        {
+          label: "Furniture",
+          subitems: [
+            {
+              label: "Tables & Chairs",
+              route: "www.youtube.com",
+            },
+            { label: "Sofas" },
+            { label: "Occasional Furniture" },
+            { label: "Childrens Furniture" },
+            { label: "Beds" },
+          ],
+        },
+      ],
+    },
+    {
+      label: "Reports",
+      subitems: [{ label: "Reports Dashboard" }, { label: "Resport Designer" }, { label: "Print Generation" }],
+      quickActions: [
+        {
+          label: "Create Report"
+        }
+      ]
+    },
+  ];
+  
+  static logoUrl =
+    "https://289umysog9.ufs.sh/f/k8fEief3SftoJw81KumkcXjto4vAEwiRkseDlPd29gSL81p5";
+  
+  static iconsList = [
+    "clock-counter-clockwise",
+    "star",
+    "f-divider",
+    "bell",
+    "gear",
+  ];
+
+  // add static vars here
+  static navigationMainWrapper = document.createElement("div");
+
   constructor() {
     super();
 
@@ -78,24 +86,58 @@ class FNavBar extends HTMLElement {
     }
   }
 
-  render() {
-    // clear out any previous content
-    this.innerHTML = "";
+  // break out functions here
+  
+  // Making main Nav wrappper -> contains all nav item
+  static createMainNavWrapper(){
+    FNavBar.navigationMainWrapper = document.createElement("div");
+    FNavBar.navigationMainWrapper.classList.add("f-navigation-header-main");
+    FNavBar.navigationMainWrapper.setAttribute("data-role", "view");
+    FNavBar.navigationMainWrapper.setAttribute("id", "nav-header");
+  }
 
-    // Making main Nav wrappper -> contains all nav items
-    const navigationMainWrapper = document.createElement("div");
-    navigationMainWrapper.classList.add("f-navigation-header-main");
-    navigationMainWrapper.setAttribute("data-role", "view");
-    navigationMainWrapper.setAttribute("id", "nav-header");
+  static buildlist(arr, parentUl){
+      arr.forEach((item) => {
+      const li = document.createElement("li");
+      li.classList.add("f-navigation-item");
 
-    // LHS of the NavBar
+      let linkEl;
+      if (item.route) {
+        linkEl = document.createElement("a");
+        linkEl.href = item.route;
+
+        // Intercept clicks for client-side routing:
+        linkEl.addEventListener("click", (e) => {
+          e.preventDefault();
+          console.log("click evbent", item.route);
+        });
+      } else {
+        linkEl = document.createElement("span");
+      }
+
+      linkEl.classList.add("f-navigation-link");
+      linkEl.textContent = item.label;
+      li.appendChild(linkEl);
+
+      if (item.subitems && item.subitems.length) {
+        const subUl = document.createElement("ul");
+        FNavBar.buildlist(item.subitems, subUl);
+        li.appendChild(subUl);
+      }
+
+      parentUl.appendChild(li);
+    });
+  }
+
+  static createNavigationMenuItems(thisElement){
     const navigationOptions = document.createElement("div");
     navigationOptions.classList.add("f-navigation-options");
 
+    console.log(thisElement);
     // Company Logo
     const img = document.createElement("img");
     img.classList.add("f-company-logo");
-    img.src = logoUrl;
+    img.src = FNavBar.logoUrl;
     img.alt = "Company Logo";
 
     const navigationOptionWrapper = document.createElement("div");
@@ -103,7 +145,7 @@ class FNavBar extends HTMLElement {
 
     // build the <ul id="nav-bar" ...>
     const ul = document.createElement("ul");
-    ul.id = this.getAttribute("menu-id") || "nav-bar";
+    ul.id = thisElement.getAttribute("menu-id") || "nav-bar";
     ul.setAttribute("data-role", "menu");
     ul.style.width = "100%";
 
@@ -111,137 +153,112 @@ class FNavBar extends HTMLElement {
     const navigationIconsWrapperSection = document.createElement("div");
     navigationIconsWrapperSection.classList.add("f-avatar-section");
 
-    let items = navBarMenuItems;
-    const buildList = (arr, parentUl) => {
-      arr.forEach((item) => {
-        const li = document.createElement("li");
-        li.classList.add("f-navigation-item");
-
-        let linkEl;
-        if (item.route) {
-          linkEl = document.createElement("a");
-          linkEl.href = item.route;
-
-          // Intercept clicks for client-side routing:
-          linkEl.addEventListener("click", (e) => {
-            e.preventDefault();
-            console.log("click evbent", item.route);
-          });
-        } else {
-          linkEl = document.createElement("span");
-        }
-
-        linkEl.classList.add("f-navigation-link");
-        linkEl.textContent = item.label;
-        li.appendChild(linkEl);
-
-        if (item.subitems && item.subitems.length) {
-          const subUl = document.createElement("ul");
-          buildList(item.subitems, subUl);
-          li.appendChild(subUl);
-        }
-
-        parentUl.appendChild(li);
-      });
-    };
-
-    buildList(items, ul);
+    FNavBar.buildlist(FNavBar.navBarMenuItems, ul);
     navigationOptionWrapper.appendChild(ul);
 
-    navigationMainWrapper.appendChild(navigationOptions);
+    FNavBar.navigationMainWrapper.appendChild(navigationOptions);
     navigationOptions.appendChild(img);
     navigationOptions.appendChild(navigationOptionWrapper);
+  }
 
-    const searchAndProfile = document.createElement("div");
-    searchAndProfile.classList.add("f-nav-bar-rhs-group");
+  static createSearchAndProfileGroup(vm, iconsList, userName, userImgUrl) {
+    const container = document.createElement("div");
+    container.classList.add("f-nav-bar-rhs-group");
 
-    const headerSearchAndShortcutsContainer = document.createElement("div");
-    headerSearchAndShortcutsContainer.classList.add("f-avatar-section");
+    // 1) build the search+icon row
+    const searchRow = FNavBar._createSearchAndShortcutContainer(vm, iconsList);
 
-    // Search item
-    const headerSearchContainer = document.createElement(
-      "f-header-search-container"
-    );
-    const headerSearchDropdown = document.createElement("input", {
-      is: "f-header-search-dropdown",
-    });
-    const headerSearchInput = document.createElement("input", {
-      is: "f-header-search-input",
-    });
+    // 2) build the avatar/profile
+    const avatarBox = FNavBar._createAvatarContainer(userName, userImgUrl);
 
-    headerSearchAndShortcutsContainer.appendChild(headerSearchContainer);
-    headerSearchContainer.appendChild(headerSearchDropdown);
+    container.appendChild(searchRow);
+    container.appendChild(avatarBox);
+    return container;
+  }
 
-    const searchBarSection = document.createElement("div");
-    searchBarSection.classList.add("f-search-input");
+  static _createSearchAndShortcutContainer(vm, iconsList) {
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("f-avatar-section");
 
-    const searchIcon = document.createElement("i");
-    searchIcon.classList.add(
-      "ph-light",
-      "ph-magnifying-glass",
-      "f-search-icon"
-    );
+    // 1) dropdown container
+    const hdrSearch = document.createElement("f-header-search-container");
+    const dd = document.createElement("input", { is: "f-header-search-dropdown" });
+    const ti = document.createElement("input", { is: "f-header-search-input" });
+    hdrSearch.appendChild(dd);
 
-    // Icons Buttons
-    const actionIconsContainer = document.createElement("div");
-    actionIconsContainer.classList.add("f-action-icons-container");
+    // 2) textbox + icon
+    const searchBar = document.createElement("div");
+    searchBar.classList.add("f-search-input");
+    const icon = document.createElement("i");
+    icon.classList.add("ph-light", "ph-magnifying-glass", "f-search-icon");
+    searchBar.append(icon, ti);
+    hdrSearch.appendChild(searchBar);
 
-    this.appendChild(navigationMainWrapper);
+    wrapper.appendChild(hdrSearch);
 
-    for (let icon of iconsList) {
-      if (icon === "f-divider") {
-        const divider = document.createElement("hr");
-        divider.classList.add("f-divider");
-        actionIconsContainer.appendChild(divider);
-        continue;
+    // 3) the action icons
+    const actionIcons = document.createElement("div");
+    actionIcons.classList.add("f-action-icons-container");
+    for (let iconName of iconsList) {
+      if (iconName === "f-divider") {
+        const hr = document.createElement("hr");
+        hr.classList.add("f-divider");
+        actionIcons.appendChild(hr);
+      } else {
+        const btn = document.createElement("button");
+        btn.classList.add("f-icon-btn");
+        const i = document.createElement("i");
+        i.classList.add("ph-light", `ph-${iconName}`);
+        btn.appendChild(i);
+        actionIcons.appendChild(btn);
       }
-
-      const iconButton = document.createElement("button");
-      iconButton.classList.add("f-icon-btn");
-      const iconElement = document.createElement("i");
-      iconElement.classList.add("ph-light", `ph-${icon}`);
-      iconButton.appendChild(iconElement);
-
-      actionIconsContainer.appendChild(iconButton);
     }
+    wrapper.appendChild(actionIcons);
 
-    // Profile and User Section
+    return wrapper;
+  }
+
+  static _createAvatarContainer(userName, userImgUrl) {
     const avatarContainer = document.createElement("div");
     avatarContainer.classList.add("f-avatar-container");
 
-    const userImg = document.createElement("img");
-    userImg.classList.add(
-      "f-avatar",
-      "f-avatar-no-margin",
-      "k-avatar",
-      "k-avatar-solid-primary",
-      "k-avatar-solid",
-      "k-avatar-md",
-      "k-rounded-full"
+    const img = document.createElement("img");
+    img.classList.add(
+      "f-avatar", "f-avatar-no-margin",
+      "k-avatar", "k-avatar-solid-primary",
+      "k-avatar-solid", "k-avatar-md", "k-rounded-full"
     );
-    userImg.setAttribute("src", this.getAttribute("user-img"));
-    userImg.alt = "User Avatar";
+    img.src = userImgUrl;
+    img.alt = "User Avatar";
 
-    const userNameSpan = document.createElement("span");
-    userNameSpan.classList.add("f-text-tiny", "f-weight-medium");
-    userNameSpan.innerText = this.getAttribute("user-name");
+    const nameSpan = document.createElement("span");
+    nameSpan.classList.add("f-text-tiny", "f-weight-medium");
+    nameSpan.innerText = userName;
 
-    const userIconElement = document.createElement("i");
-    userIconElement.classList.add("ph-light", `ph-caret-down`);
+    const caret = document.createElement("i");
+    caret.classList.add("ph-light", "ph-caret-down");
 
-    avatarContainer.appendChild(userImg);
-    avatarContainer.appendChild(userNameSpan);
-    avatarContainer.appendChild(userIconElement);
+    avatarContainer.append(img, nameSpan, caret);
+    return avatarContainer;
+  }
 
-    headerSearchAndShortcutsContainer.appendChild(actionIconsContainer);
-    searchBarSection.appendChild(searchIcon);
-    searchBarSection.appendChild(headerSearchInput);
-    headerSearchContainer.appendChild(searchBarSection);
 
-    searchAndProfile.appendChild(headerSearchAndShortcutsContainer);
-    searchAndProfile.appendChild(avatarContainer);
+  render() {
+    // clear out any previous content
+    this.innerHTML = "";
+    
+    FNavBar.createMainNavWrapper();
+    FNavBar.createNavigationMenuItems(this);
 
-    navigationMainWrapper.appendChild(searchAndProfile);
+    const rightGroup = FNavBar.createSearchAndProfileGroup(
+      this.vm,
+      FNavBar.iconsList,
+      this.getAttribute("user-name"),
+      this.getAttribute("user-img")
+    );
+    FNavBar.navigationMainWrapper.appendChild(rightGroup);
+    
+    this.appendChild(FNavBar.navigationMainWrapper);
   }
 }
 

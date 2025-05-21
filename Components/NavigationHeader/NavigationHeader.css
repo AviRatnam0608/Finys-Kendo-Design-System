@@ -207,6 +207,24 @@
   padding-inline: 8px 12px;
 }
 
+/* NavBar Quick action dropdown styles */
+.k-menu-popup.k-popup {
+  margin-top: 1.625rem;
+  border-radius: 0.375rem;
+  border: 1px solid var(--secondary-lightest);
+  padding: 1rem 2.563rem 1.5rem 1.5rem;
+  font-weight: var(--font-weight-500) !important;
+}
+
+.k-menu-popup.k-popup .k-link.k-menu-link:hover{
+  background-color: var(--primary-lightest);
+  border-radius: 0.375rem;
+}
+
+.k-group.k-menu-group.k-menu-group-md {
+  flex: 1 1 0;
+}
+
 /* Small screen styles */
 @media screen and (max-width: 780px) {
   .f-navigation {
