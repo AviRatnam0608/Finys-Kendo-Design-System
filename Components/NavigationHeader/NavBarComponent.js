@@ -24,6 +24,9 @@ class FNavBar extends HTMLElement {
       quickActions: [
         {
           label: "Create Report"
+        },
+        {
+          label: "Create Label"
         }
       ]
     },
@@ -85,8 +88,6 @@ class FNavBar extends HTMLElement {
       kendo.bind(searchSection, this.vm);
     }
   }
-
-  // break out functions here
   
   // Making main Nav wrappper -> contains all nav item
   static createMainNavWrapper(){
@@ -119,14 +120,51 @@ class FNavBar extends HTMLElement {
       linkEl.textContent = item.label;
       li.appendChild(linkEl);
 
-      if (item.subitems && item.subitems.length) {
+      if(item.quickActions){
+        const subUl = document.createElement("ul");
+        const subli = document.createElement("li");
+        subUl.classList.add("f-quick-action-ul");
+        subUl.appendChild(subli);
+        subli.appendChild(FNavBar._buildQuickActionsPanel(item));
+        li.appendChild(subUl);
+      } else if (item.subitems && item.subitems.length) {
         const subUl = document.createElement("ul");
         FNavBar.buildlist(item.subitems, subUl);
         li.appendChild(subUl);
       }
-
+  
       parentUl.appendChild(li);
     });
+  }
+
+  static _buildQuickActionsPanel(item){
+    const panel = `
+      <div class="f-quick-action-template">
+        <div class="f-quick-action-items">
+          <ul class="k-group k-menu-group k-menu-group-md" role="menu">
+            ${item.subitems.map((subitem)=>{
+              return `<li class="f-navigation-item k-item k-menu-item">${subitem.label}</li>`
+            }).join("")}
+          </ul>
+        </div>
+
+        <div class="f-quick-action-items f-quick-action-rhs">
+          <span class="f-quick-actions-title">Quick Actions</span>
+          <ul style="list-style:none; margin:0; padding:0;">
+            ${item.quickActions.map((subitem)=>{
+              return `
+                <li style="display: flex; align-items:center; margin:0; margin-bottom: 1rem">
+                  <i class="ph ph-plus-circle" style="margin-right: 0.25rem; font-size: 1rem; color: var(--primary) "></i>
+                  <span style="font-weight: 600; font-size: 0.875rem; color:#006DDB; white-space:nowrap">${subitem.label}</span>
+                </li>
+              `
+            }).join("")}
+          </ul>
+        </div>
+      </div>
+    `;
+    console.log(item);
+    return document.createRange().createContextualFragment(panel);
   }
 
   static createNavigationMenuItems(thisElement){

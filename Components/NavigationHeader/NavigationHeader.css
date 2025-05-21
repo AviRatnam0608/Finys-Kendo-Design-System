@@ -225,6 +225,38 @@
   flex: 1 1 0;
 }
 
+.f-quick-action-items.f-quick-action-rhs {
+  background-color: var(--neutral-ultra-light);
+  margin-left: 2.563rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.f-quick-actions-title {
+  font-weight: var(--font-weight-600);
+  font-size: 1rem;
+  white-space: nowrap;
+  color: var(--neutral-darkest);
+  margin-bottom: 1.25rem;
+}
+
+.f-quick-action-template {
+  display: flex;
+  flex-direction: row;
+}
+
+.k-menu-popup:has(.f-quick-action-ul){
+  padding: 0;
+}
+
+.k-menu-popup .f-quick-action-ul .f-quick-action-items {
+  padding: 1rem 1.5rem;
+}
+
+.k-menu-popup .f-quick-action-ul .f-quick-action-items.f-quick-action-rhs {
+  padding: 1.875rem 6.375rem 2.188rem 1.5rem;
+}
+
 /* Small screen styles */
 @media screen and (max-width: 780px) {
   .f-navigation {
