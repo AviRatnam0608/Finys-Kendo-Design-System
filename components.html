@@ -281,7 +281,8 @@
     </div>
   </section>
 
-  <section>
+  <section style="padding-bottom: 100px">
+    <h1>Wizard</h1>
     <nav
       data-role="stepper"
       data-orientation="vertical"
@@ -293,8 +294,18 @@
         { 'label': '3. Step Three' }
       ]"
     >
-      
     </nav>
+    <div data-role="progressbar"
+      data-min="100"
+      data-max="200"
+      data-bind="enabled: isEnabled,
+                visible: isVisible,
+                value: progressValue,
+                events: { start: onStart,
+                          change: onChange,
+                          complete: onComplete}"
+      style="width: 100%;">
+    </div>
   </section>
 </body>
 
