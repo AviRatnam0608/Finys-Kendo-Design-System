@@ -137,12 +137,12 @@ class FNavBar extends HTMLElement {
   static logoUrl =
     "https://289umysog9.ufs.sh/f/k8fEief3SftoJw81KumkcXjto4vAEwiRkseDlPd29gSL81p5";
   
-  static iconsList = [
-    "clock-counter-clockwise",
-    "star",
+  static iconsOptionsList = [
+    "recently-viewed",
+    "favorites",
     "f-divider",
-    "bell",
-    "gear",
+    "notifications",
+    "settings",
   ];
 
   // add static vars here
@@ -255,7 +255,7 @@ class FNavBar extends HTMLElement {
           </ul>
         </div>
 
-        <div class="f-quick-action-items f-quick-action-rhs">
+        <div class="f-quick-action-items f-quick-action-rhs f-border-rounded-right">
           <span class="f-quick-actions-title">Quick Actions</span>
           <ul style="list-style:none; margin:0; padding:0;">
             ${item.quickActions.map((subitem)=>{
@@ -329,7 +329,7 @@ class FNavBar extends HTMLElement {
 
     // 1) dropdown container
     const hdrSearch = document.createElement("f-header-search-container");
-    const dd = document.createElement("input", { is: "f-header-search-dropdown" });
+    const dd = document.createElement("input", { is: "f-header-search-dropdown"});
     const ti = document.createElement("input", { is: "f-header-search-input" });
     hdrSearch.appendChild(dd);
 
@@ -346,19 +346,16 @@ class FNavBar extends HTMLElement {
     // 3) the action icons
     const actionIcons = document.createElement("div");
     actionIcons.classList.add("f-action-icons-container");
-    for (let iconName of iconsList) {
-      if (iconName === "f-divider") {
-        const hr = document.createElement("hr");
-        hr.classList.add("f-divider");
-        actionIcons.appendChild(hr);
-      } else {
-        const btn = document.createElement("button");
-        btn.classList.add("f-icon-btn");
-        const i = document.createElement("i");
-        i.classList.add("ph-light", `ph-${iconName}`);
-        btn.appendChild(i);
-        actionIcons.appendChild(btn);
-      }
+
+    for (let iconName of FNavBar.iconsOptionsList) {
+        if (iconName === "f-divider") {
+          const hr = document.createElement("hr");
+          hr.classList.add("f-divider");
+          actionIcons.appendChild(hr);
+        } else {
+          const recentlyViewed = document.createElement("button", { is: `f-${iconName}-button`});
+          actionIcons.appendChild(recentlyViewed);
+        }
     }
     wrapper.appendChild(actionIcons);
 
@@ -488,6 +485,95 @@ class FHeaderSearchElementInput extends HTMLInputElement {
   }
 }
 
+
+class FinysRecentlyViewedMenu extends HTMLButtonElement {
+
+  // this should come from some backend point
+  static test =[
+    { id: "keep-text", text: "Keep Text Only", icon: "clipboard-text", click: function(e) { console.log("event :: click \#" + $(e.currentTarget).attr("id")); }},
+    { id: "paste-html", text: "Paste as HTML", icon: "clipboard-code", click:function(e){ console.log("event :: click \#" + $(e.currentTarget).attr("id")); }},
+    { id: "paste-markdown", text: "Paste Markdown", icon: "clipboard-markdown", click: function(e) { console.log("event :: click \#" + $(e.currentTarget).attr("id")); }},
+    { id: "paste-default", text: "Set Default Paste", click: function(e){ console.log("event :: click \#" + $(e.currentTarget).attr("id"));  } }
+  ];
+
+  connectedCallback() {
+      this.classList.add('f-recently-viewed')
+      this.setAttribute('data-role', 'dropdownbutton');
+      this.setAttribute('data-items', JSON.stringify(FinysRecentlyViewedMenu.test));
+      this.setAttribute('data-header-template',
+        '<div class="k-my-header">Recently viewed items</div>'
+      );
+      this.innerHTML = `
+        <i class="ph-light ph-clock-counter-clockwise"></i>
+      `
+      this.classList.add("f-icon-btn")
+  }
+}
+
+class FinysFavoritesMenu extends HTMLButtonElement {
+
+  // this should come from some backend point
+  static test =[
+    { id: "keep-text", text: "Keep Text Only", icon: "clipboard-text", click: function(e) { console.log("event :: click \#" + $(e.currentTarget).attr("id")); }},
+    { id: "paste-html", text: "Paste as HTML", icon: "clipboard-code", click:function(e){ console.log("event :: click \#" + $(e.currentTarget).attr("id")); }},
+    { id: "paste-markdown", text: "Paste Markdown", icon: "clipboard-markdown", click: function(e) { console.log("event :: click \#" + $(e.currentTarget).attr("id")); }},
+    { id: "paste-default", text: "Set Default Paste", click: function(e){ console.log("event :: click \#" + $(e.currentTarget).attr("id"));  } }
+  ];
+
+  connectedCallback() {
+      this.classList.add('f-recently-viewed')
+      this.setAttribute('data-role', 'dropdownbutton');
+      this.setAttribute('data-items', JSON.stringify(FinysFavoritesMenu.test));
+      this.innerHTML = `
+        <i class="ph-light ph-star"></i>
+      `
+      this.classList.add("f-icon-btn")
+  }
+}
+
+class FinysNotificationsMenu extends HTMLButtonElement {
+
+  // this should come from some backend point
+  static test =[
+    { id: "keep-text", text: "Keep Text Only", icon: "clipboard-text", click: function(e) { console.log("event :: click \#" + $(e.currentTarget).attr("id")); }},
+    { id: "paste-html", text: "Paste as HTML", icon: "clipboard-code", click:function(e){ console.log("event :: click \#" + $(e.currentTarget).attr("id")); }},
+    { id: "paste-markdown", text: "Paste Markdown", icon: "clipboard-markdown", click: function(e) { console.log("event :: click \#" + $(e.currentTarget).attr("id")); }},
+    { id: "paste-default", text: "Set Default Paste", click: function(e){ console.log("event :: click \#" + $(e.currentTarget).attr("id"));  } }
+  ];
+
+  connectedCallback() {
+      this.classList.add('f-recently-viewed')
+      this.setAttribute('data-role', 'dropdownbutton');
+      this.setAttribute('data-items', JSON.stringify(FinysNotificationsMenu.test));
+      this.innerHTML = `
+        <i class="ph-light ph-bell"></i>
+      `
+      this.classList.add("f-icon-btn")
+  }
+}
+
+class FinysSettingsMenu extends HTMLButtonElement {
+
+  // this should come from some backend point
+  static test =[
+    { id: "keep-text", text: "Keep Text Only", icon: "clipboard-text", click: function(e) { console.log("event :: click \#" + $(e.currentTarget).attr("id")); }},
+    { id: "paste-html", text: "Paste as HTML", icon: "clipboard-code", click:function(e){ console.log("event :: click \#" + $(e.currentTarget).attr("id")); }},
+    { id: "paste-markdown", text: "Paste Markdown", icon: "clipboard-markdown", click: function(e) { console.log("event :: click \#" + $(e.currentTarget).attr("id")); }},
+    { id: "paste-default", text: "Set Default Paste", click: function(e){ console.log("event :: click \#" + $(e.currentTarget).attr("id"));  } }
+  ];
+
+  connectedCallback() {
+      this.classList.add('f-recently-viewed')
+      this.setAttribute('data-role', 'dropdownbutton');
+      this.setAttribute('data-items', JSON.stringify(FinysSettingsMenu.test));
+      this.innerHTML = `
+        <i class="ph-light ph-gear"></i>
+      `
+      this.classList.add("f-icon-btn")
+  }
+}
+
+
 customElements.define("f-nav-bar", FNavBar);
 customElements.define(
   "f-header-search-container",
@@ -500,4 +586,18 @@ customElements.define(
 );
 customElements.define("f-header-search-input", FHeaderSearchElementInput, {
   extends: "input",
+});
+
+
+customElements.define("f-recently-viewed-button", FinysRecentlyViewedMenu, {
+  extends: "button",
+});
+customElements.define("f-favorites-button", FinysFavoritesMenu, {
+  extends: "button",
+});
+customElements.define("f-notifications-button", FinysNotificationsMenu, {
+  extends: "button",
+});
+customElements.define("f-settings-button", FinysSettingsMenu, {
+  extends: "button",
 });
