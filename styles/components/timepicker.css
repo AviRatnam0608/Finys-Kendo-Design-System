@@ -4,14 +4,21 @@
 
 
 .f-timepicker input.f-timepicker {
-    background-color: var(--neutral-lightest);
+    background-color: var(--neutral-ultra-light);
     padding: 0.5em;
     caret-color: var(--primary);
+    color: var(--neutral-darkest);
+}
+
+.f-timepicker:has(input.f-timepicker:hover) input.f-timepicker:not(:focus),
+.f-timepicker:has(input.f-timepicker:hover) button.k-input-button,
+.f-timepicker input.f-timepicker:not(:focus):has(+ button.k-input-button:hover)   {
+    background-color: var(--neutral-lightest);
 }
 
 .f-timepicker:has(input.f-timepicker:focus) {
-    border: 0.0625em solid var(--primary);
-    box-shadow: 0px 0px 0px 2px #C2E0FF;
+    border: 0.0625rem solid var(--primary);
+    box-shadow: 0px 0px 0px 0.125rem #C2E0FF;
 }
 
 .f-timepicker input.f-timepicker:focus {
@@ -29,6 +36,7 @@
 .f-timepicker > button.k-input-button {
     padding-left: 10px;
     color: var(--neutral-dark);
+    border: 0;
 }
 
 .f-timepicker > button.k-input-button.k-button-solid.k-button-solid-base:hover {
@@ -49,11 +57,11 @@
 }
 
 .f-timepicker > button.k-input-button {
-    background-color: var(--neutral-lightest);
+    background-color: var(--neutral-ultra-light);
 }
 
 .f-timepicker > button.k-input-button:hover {
-    background-color: var(--neutral-lighter);
+    background-color: var(--neutral-lightest);
 }
 
 span.f-timepicker.f-selected > input.f-timepicker,
