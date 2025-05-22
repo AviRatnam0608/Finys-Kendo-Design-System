@@ -205,6 +205,7 @@
 .f-navigation-item .k-link.k-menu-link {
   padding-block: 0;
   padding-inline: 8px 12px;
+  align-items: center;
 }
 
 /* NavBar Quick action dropdown styles */
@@ -255,6 +256,16 @@
 
 .k-menu-popup .f-quick-action-ul .f-quick-action-items.f-quick-action-rhs {
   padding: 1.875rem 6.375rem 2.188rem 1.5rem;
+}
+
+.f-quick-action-link {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.f-quick-action-link:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
 }
 
 /* Small screen styles */

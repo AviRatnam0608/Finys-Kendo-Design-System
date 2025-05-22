@@ -1,33 +1,135 @@
 class FNavBar extends HTMLElement {
   static navBarMenuItems = [
     {
-      label: "Accounts",
+      label: "Accounting",
       subitems: [
         {
-          label: "Furniture",
-          subitems: [
-            {
-              label: "Tables & Chairs",
-              route: "www.youtube.com",
-            },
-            { label: "Sofas" },
-            { label: "Occasional Furniture" },
-            { label: "Childrens Furniture" },
-            { label: "Beds" },
-          ],
+          label: "Check Release",
+          route: "/check-release"
+        },
+        {
+          label: "Check Processing",
+          route: "/check-processing"
+        },
+        {
+          label: "Bank Reconcilliation",
+          route: "/ban-reconcilliation"
+        }
+      ],
+    },
+    {
+      label: "Claims",
+      subitems: [
+        {
+          label: "Claims Home",
+          route: "/"
+        },
+        {
+          label: "Contacts",
+          route: "/"
+        },
+        {
+          label: "Pending FNOLs",
+          route: "/"
+        },
+        {
+          label: "Payment/ Reserve Approval",
+          route: "/"
+        },
+        {
+          label: "Unlock Data",
+          route: "/"
+        },
+      ],
+      quickActions: [
+        {
+          label: "Create FNOL",
+          route: "/"
+        },
+      ]
+    },
+    {
+      label: "Policy",
+      subitems: [
+        {
+          label: "Policy Home",
+          route: "/"
+        },
+        {
+          label: "Pending Quotes",
+          route: "/"
+        },
+        {
+          label: "Unlock Activity",
+          route: "/"
+        },
+        {
+          label: "Agency Maintainance",
+          route: "/"
+        },
+      ],
+      quickActions: [
+        {
+          label: "Create Dwelling Fire Quote",
+          route: "/"
+        },
+        {
+          label: "Create Dwelling Fire Application",
+          route: "/"
+        },
+        {
+          label: "Create Commercial Property Quote",
+          route: "/"
+        },
+        {
+          label: "Create Commercial Property Application",
+          route: "/"
+        },
+        {
+          label: "Export Transactions",
+          route: "/",
+          icon: "upload-simple"
+        },
+        {
+          label: "Import Transactions",
+          route: "/",
+          icon: "download-simple"
+        },
+      ]
+    },
+    {
+      label: "Billing",
+      subitems: [
+        {
+          label: "Suspense Account",
+          route: "/"
+        },
+        {
+          label: "Payments",
+          route: "/"
+        },
+        {
+          label: "Quote Payments",
+          route: "/"
+        },
+        {
+          label: "Agency Payment Management",
+          route: "/"
         },
       ],
     },
     {
       label: "Reports",
-      subitems: [{ label: "Reports Dashboard" }, { label: "Resport Designer" }, { label: "Print Generation" }],
+      subitems: [
+        { label: "Reports Dashboard", route: "/"}, 
+        { label: "Resport Designer", route: "/" }, 
+        { label: "Print Generation", route: "/" }
+      ],
       quickActions: [
         {
-          label: "Create Report"
+          label: "Create Report",
+          route: "/"
         },
-        {
-          label: "Create Label"
-        }
       ]
     },
   ];
@@ -143,7 +245,12 @@ class FNavBar extends HTMLElement {
         <div class="f-quick-action-items">
           <ul class="k-group k-menu-group k-menu-group-md" role="menu">
             ${item.subitems.map((subitem)=>{
-              return `<li class="f-navigation-item k-item k-menu-item">${subitem.label}</li>`
+              return `
+                <li class="f-navigation-item k-item k-menu-item">
+                  <a href="${subitem.route}">
+                    ${subitem.label}
+                  </a>
+                </li>`
             }).join("")}
           </ul>
         </div>
@@ -154,8 +261,12 @@ class FNavBar extends HTMLElement {
             ${item.quickActions.map((subitem)=>{
               return `
                 <li style="display: flex; align-items:center; margin:0; margin-bottom: 1rem">
-                  <i class="ph ph-plus-circle" style="margin-right: 0.25rem; font-size: 1rem; color: var(--primary) "></i>
-                  <span style="font-weight: 600; font-size: 0.875rem; color:#006DDB; white-space:nowrap">${subitem.label}</span>
+                  <i class="ph ph-${subitem.icon ? subitem.icon : "plus-circle"}" style="margin-right: 0.25rem; font-size: 1rem; color: var(--primary) "></i>
+                  <span style="font-weight: 600; font-size: 0.875rem; color:#006DDB; white-space:nowrap">
+                    <a href="${subitem.route}" class="f-quick-action-link">
+                      ${subitem.label}
+                    </a>
+                  </span>
                 </li>
               `
             }).join("")}
@@ -163,7 +274,6 @@ class FNavBar extends HTMLElement {
         </div>
       </div>
     `;
-    console.log(item);
     return document.createRange().createContextualFragment(panel);
   }
 
@@ -171,7 +281,6 @@ class FNavBar extends HTMLElement {
     const navigationOptions = document.createElement("div");
     navigationOptions.classList.add("f-navigation-options");
 
-    console.log(thisElement);
     // Company Logo
     const img = document.createElement("img");
     img.classList.add("f-company-logo");
