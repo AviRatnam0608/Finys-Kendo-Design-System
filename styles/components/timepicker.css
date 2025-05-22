@@ -10,6 +10,11 @@
     color: var(--neutral-darkest);
 }
 
+.f-timepicker.k-timepicker.f-error {
+    box-shadow: 0 0 0 0.125rem rgba(from var(--error) r g b / 0.2);
+    border: 0.0625rem solid var(--error);
+}
+
 .f-timepicker:has(input.f-timepicker:hover) input.f-timepicker:not(:focus),
 .f-timepicker:has(input.f-timepicker:hover) button.k-input-button,
 .f-timepicker input.f-timepicker:not(:focus):has(+ button.k-input-button:hover)   {

@@ -306,7 +306,42 @@ class FinysModal {
     }
 }
 
+class FinysValidation extends HTMLElement {
+    connectedCallback() {
+        this.classList.add('f-validation', 'f-hidden');
+        this.for = this.getAttribute('for');
+        this.innerSpan = document.createElement('span');
+        this.innerSpan.textContent = this.textContent;
+        this.textContent = '';
+        this.appendChild(this.innerSpan)
+    }
 
+    show() {
+        this.highlightAssociatedElement();
+        this.classList.remove('f-hidden');
+    }
+
+    hide() {
+        this.classList.add('f-hidden');
+    }
+
+    highlightAssociatedElement() {
+        if(this.for) {
+            return document.querySelector(`#${this.for}`).classList.add('f-error');
+        }
+         return this.previousElementSibling.classList.add('f-error');
+    }
+}
+
+class FinysTooltip extends HTMLElement {
+    connectedCallback() {
+        this.classList.add('f-tooltip');
+    }
+}
+
+
+customElements.define('finys-validation', FinysValidation)
+customElements.define('finys-tooltip', FinysTooltip)
 customElements.define('finys-modal-target', FinysModalElement, {extends: 'div'})
 customElements.define('finys-context-menu', FinysContextMenu, {extends: 'button'})
 customElements.define('finys-toggle', FinysToggle, {extends: 'input'})

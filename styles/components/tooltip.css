@@ -1,0 +1,20 @@
+.f-tooltip {
+    background-color: var(--neutral-darker);
+    color: var(--neutral-white);
+    padding: 0.375em 0.5em;
+    border-radius: 0.375rem;
+    box-shadow: 0px 8px 8px -4px #00000008, 0px 20px 24px -4px #00000014;
+    top: 0;
+    display: none;
+    position: relative;
+}
+
+.f-tooltip::before {
+    content: "\e4b0";
+    position: absolute;
+    left: 1rem;
+    border-radius: 0.375rem;
+    top: -0.75rem;
+    color: var(--neutral-darker);
+    font-family: "Phosphor-Fill" !important;
+}
