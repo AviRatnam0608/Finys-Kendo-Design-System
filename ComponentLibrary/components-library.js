@@ -376,6 +376,9 @@ class FinysProgressStepper extends HTMLElement {
 
     constructor() {
         super();
+        this.id = crypto.randomUUID();
+        this.popoverId = `stepper-dropdown-${this.id}`;
+        this.anchorName = `--menu-button-${this.id}`;
         this.vm = kendo.observable({
             currentStep: 1
         });
@@ -384,12 +387,12 @@ class FinysProgressStepper extends HTMLElement {
     connectedCallback() {
         this.classList.add('f-progressbar-stepper-container')
         this.setAttributes();
-        this.menuButton = this.createProgressbarMenuButton()
+        this.menuButton = this.createProgressbarMenuButton();
         this.appendChild(this.menuButton);
         this.appendChild(this.createProgressbar());
-        this.nav = this.createStepperNav()
+        this.nav = this.createStepperNav();
         this.appendChild(this.nav);
-        this.registerListener('click', document, (e) => this.handleClickOutside(e))
+        // this.registerListener('click', document, (e) => this.handleClickOutside(e))
         kendo.bind(this, this.vm);
     }
 
@@ -404,8 +407,10 @@ class FinysProgressStepper extends HTMLElement {
 
     createProgressbarMenuButton() {
         const menu = document.createElement('button');
+        menu.style['anchor-name'] = this.anchorName;
         menu.classList.add('f-progressbar-menu');
-        this.registerListener('click', menu, () => this.handleMenuClick());
+        menu.setAttribute('popovertarget', this.popoverId);
+        // this.registerListener('click', menu, () => this.handleMenuClick());
         menu.innerHTML = `<span data-bind="text: currentStep">${this.currentStep}</span>/<span>${this.max}`
         return menu;
     }
@@ -421,27 +426,29 @@ class FinysProgressStepper extends HTMLElement {
     }
 
     createStepperNav() {
+        const popover = document.createElement('div');
+        popover.setAttribute('popover', "");
+        popover.setAttribute('id', this.popoverId);
+        popover.style['position-anchor'] = this.anchorName;
         const nav = document.createElement('nav');
         nav.setAttribute('data-role', 'stepper');
         nav.setAttribute('data-orientation', 'vertical');
         nav.setAttribute('data-label', 'true');
         nav.setAttribute('data-linear', 'false');
         nav.setAttribute('data-steps', this.steps);
-        const container = document.createElement('div');
-        container.classList.add('another-container');
-        container.appendChild(nav);
-        return container;
+        popover.appendChild(nav);
+        return popover;
     }
 
-    handleMenuClick() {
-        this.nav.classList.remove('f-hidden');
-    }
+    // handleMenuClick() {
+    //     this.nav.classList.remove('f-hidden');
+    // }
 
-    handleClickOutside(e) {
-        if(!this.nav.contains(e.target) && !this.menuButton.contains(e.target)) {
-            this.nav.classList.add('f-hidden');
-        }
-    }
+    // handleClickOutside(e) {
+    //     if(!this.nav.contains(e.target) && !this.menuButton.contains(e.target)) {
+    //         this.nav.classList.add('f-hidden');
+    //     }
+    // }
 
     registerListener(event, obj, method) {
         obj.addEventListener(event, method);
