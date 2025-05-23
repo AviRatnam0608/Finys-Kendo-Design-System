@@ -306,7 +306,6 @@ class FinysModal {
     }
 }
 
-<<<<<<< HEAD
 class FinysValidation extends HTMLElement {
     connectedCallback() {
         this.classList.add('f-validation', 'f-hidden');
@@ -316,22 +315,6 @@ class FinysValidation extends HTMLElement {
         this.textContent = '';
         this.appendChild(this.innerSpan)
     }
-=======
-class FinysCheckbox extends HTMLInputElement {
-    static label;
-    
-    connectedCallback() {
-        this.setAttribute("type", "checkbox");
-        this.setAttribute("data-role", "checkbox");
-        this.setAttribute("id", "finys-checkbox-input");
-        this.classList.add("f-checkbox");
-
-        this.getAttribute("label");
-    }
-}
-
->>>>>>> 9b3baf3 (Added checkbox element)
-
     show() {
         this.highlightAssociatedElement();
         this.classList.remove('f-hidden');
@@ -346,6 +329,19 @@ class FinysCheckbox extends HTMLInputElement {
             return document.querySelector(`#${this.for}`).classList.add('f-error');
         }
          return this.previousElementSibling.classList.add('f-error');
+    }
+}
+
+class FinysCheckbox extends HTMLInputElement {
+    static label;
+    
+    connectedCallback() {
+        this.setAttribute("type", "checkbox");
+        this.setAttribute("data-role", "checkbox");
+        this.setAttribute("id", "finys-checkbox-input");
+        this.classList.add("f-checkbox");
+
+        this.getAttribute("label");
     }
 }
 
