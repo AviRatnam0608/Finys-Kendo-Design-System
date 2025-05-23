@@ -333,14 +333,21 @@ class FinysValidation extends HTMLElement {
 }
 
 class FinysCheckbox extends HTMLInputElement {
-    static label;
     
     connectedCallback() {
         this.setAttribute("type", "checkbox");
         this.setAttribute("data-role", "checkbox");
         this.classList.add("f-checkbox");
+    }
+}
 
-        this.getAttribute("label");
+class FinysRadioButton extends HTMLInputElement {    
+    connectedCallback() {
+        this.setAttribute("type", "radio");
+        this.setAttribute("data-role", "radio");
+        this.classList.add("k-radio");
+        this.classList.add("k-radio-md");
+        this.classList.add("f-radiobutton");
     }
 }
 
@@ -365,3 +372,4 @@ customElements.define('finys-button', FinysButton, {extends: 'button'})
 customElements.define('finys-text-box', FinysTextBox, {extends: 'input'})
 customElements.define('finys-masked-text-box', FinysMaskedTextBox, {extends: 'input'})
 customElements.define('finys-checkbox', FinysCheckbox, {extends: 'input'})
+customElements.define('finys-radiobutton', FinysRadioButton, {extends: 'input'})

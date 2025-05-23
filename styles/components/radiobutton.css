@@ -1,0 +1,50 @@
+.f-radiobutton {
+    background-color: var(--neutral-white);
+    border: 0.0625rem solid var(--neutral-light); 
+  }
+  
+  .f-radiobutton:hover {
+    background-color: var(--neutral-ultra-light);
+    border-color: var(--neutral);
+  }
+  
+  .f-radiobutton:checked,
+  .f-radiobutton.k-checked {
+    color: var(--primary);
+    background-color: var(--primary);
+    border-color: var(--primary);
+  }
+
+
+  .k-radio-md {
+    width: 1em !important;
+    height: 1em !important;
+  }
+
+  .k-radio-label {
+    margin-left: 0.375em;
+  }
+
+  .f-radiobutton + .k-radio-label {
+    font-size: 1em;
+  }
+
+  .k-radio:checked:focus, .k-radio.k-checked.k-focus {
+    box-shadow: 0 0 0 2px 
+    color-mix(in srgb, var(--primary) 30%, transparent);
+  }
+  
+  /* Draw the Phosphor icon on :checked */
+  /* 1.25em (~20px) → 1.25em */
+  /* input[type="radiobutton"]:checked:after {
+    font-family: "Phosphor";
+    content: "\e182";
+    font-size: 1.25em;
+    font-weight: 100;
+    color: var(--neutral-white);
+  } */
+  
+  /* input[type="radiobutton"]:checked:before {
+    content: "";
+  } */
+  
