@@ -1,0 +1,88 @@
+.f-progressbar-stepper-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.f-progressbar-stepper-container .f-progressbar-menu {
+  text-align: right;
+  margin-bottom: 0.5rem;
+  margin-left: auto;
+  width: max-content;
+  cursor: pointer;
+  user-select: none;
+  background: none;
+  border: 0;
+}
+
+.f-progressbar-menu {
+  color: var(--primary);
+}
+
+.f-progressbar-menu::after {
+  font-family: "Phosphor" !important;
+  content: "\e136";
+}
+
+.f-progressbar-menu.f-progressbar-open::after {
+  font-family: "Phosphor" !important;
+  content: "\e13c";
+}
+
+.f-progressbar.k-progressbar {
+  opacity: 1;
+  border-radius: 0.375rem;
+}
+
+.f-progressbar .k-progressbar-value {
+  background-color: var(--primary);
+  border-radius: 0.375rem;
+}
+
+.f-progressbar-stepper-container .another-container {
+  --_box-shadow: 0px 4px 6px -2px #00000008, 
+  0px 12px 16px -4px #00000014,
+  0px 0px 0px 1px #E5E9EE;
+
+  position: absolute;
+  right: 0;
+  top: 3rem;
+  border-radius: 0.375rem;
+  width: max-content;
+  overflow: hidden;
+  height: auto;
+  box-shadow: var(--_box-shadow);
+  interpolate-size: allow-keywords;
+  transition: height 250ms ease-in-out, box-shadow 300ms ease-in-out;
+}
+
+.f-progressbar-stepper-container nav {
+  padding: 1rem;
+}
+
+.f-progressbar-stepper-container .another-container.f-hidden {
+  box-shadow: none;
+  height: 0;
+  /* padding-top: 0; */
+  /* padding-bottom: 0; */
+  visibility: visible;
+
+}
+
+.f-progressbar-stepper-container nav > span {
+  font-size: 0.875rem;
+  color: var(--neutral);
+}
+
+.k-progressbar-horizontal {
+  height: 0.5rem;
+}
+
+.k-progress-status {
+  display: none;
+}
+
+.k-stepper .k-step-text {
+  font-weight: 500;
+  font-size: 1rem;
+}

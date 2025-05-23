@@ -373,7 +373,86 @@ class FinysTooltip extends HTMLElement {
     }
 }
 
+class FinysProgressStepper extends HTMLElement {
+    destroyListenerFuncs = [];
 
+    constructor() {
+        super();
+        this.vm = kendo.observable({
+            currentStep: 1
+        });
+    }
+
+    connectedCallback() {
+        this.classList.add('f-progressbar-stepper-container')
+        this.setAttributes();
+        this.menuButton = this.createProgressbarMenuButton()
+        this.appendChild(this.menuButton);
+        this.appendChild(this.createProgressbar());
+        this.nav = this.createStepperNav()
+        this.appendChild(this.nav);
+        this.registerListener('click', document, (e) => this.handleClickOutside(e))
+        kendo.bind(this, this.vm);
+    }
+
+    disconnectedCallback() {
+        this.destroyListenerFuncs.forEach(func => func());
+    }
+
+    setAttributes() {
+        this.steps = this.getAttribute('steps');
+        this.max = JSON.parse(this.steps).length;
+    }
+
+    createProgressbarMenuButton() {
+        const menu = document.createElement('button');
+        menu.classList.add('f-progressbar-menu');
+        this.registerListener('click', menu, () => this.handleMenuClick());
+        menu.innerHTML = `<span data-bind="text: currentStep">${this.currentStep}</span>/<span>${this.max}`
+        return menu;
+    }
+
+    createProgressbar() {
+        const progressbar = document.createElement('div');
+        progressbar.classList.add('f-progressbar')
+        progressbar.setAttribute('data-role', 'progressbar');
+        progressbar.setAttribute('data-min', '0');
+        progressbar.setAttribute('data-max', this.max);
+        progressbar.setAttribute('data-bind', "value: currentStep");
+        return progressbar;
+    }
+
+    createStepperNav() {
+        const nav = document.createElement('nav');
+        nav.setAttribute('data-role', 'stepper');
+        nav.setAttribute('data-orientation', 'vertical');
+        nav.setAttribute('data-label', 'true');
+        nav.setAttribute('data-linear', 'false');
+        nav.setAttribute('data-steps', this.steps);
+        const container = document.createElement('div');
+        container.classList.add('another-container');
+        container.appendChild(nav);
+        return container;
+    }
+
+    handleMenuClick() {
+        this.nav.classList.remove('f-hidden');
+    }
+
+    handleClickOutside(e) {
+        if(!this.nav.contains(e.target) && !this.menuButton.contains(e.target)) {
+            this.nav.classList.add('f-hidden');
+        }
+    }
+
+    registerListener(event, obj, method) {
+        obj.addEventListener(event, method);
+        this.destroyListenerFuncs.push(() => obj.removeEventListener(event, method))
+    }
+}
+
+
+customElements.define('finys-progress-stepper', FinysProgressStepper);
 customElements.define('finys-validation', FinysValidation)
 customElements.define('finys-tooltip', FinysTooltip)
 customElements.define('finys-modal-target', FinysModalElement, {extends: 'div'})
