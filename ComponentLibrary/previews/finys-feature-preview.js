@@ -16,6 +16,8 @@ class FinysFeaturePreview extends HTMLElement {
                 return this.renderFormsView();
             case 'navbar':
                 return this.renderNavbarView();
+            case 'checkbox':
+                return this.renderCheckbox();
             default:
                 this.innerHTML = `
                     <h1>unknown route</h1>
@@ -59,6 +61,17 @@ class FinysFeaturePreview extends HTMLElement {
             <finys-code-viewer></finys-code-viewer>
         `
         
+    }
+
+    renderCheckbox() {
+        this.innerHTML = `
+            <finys-feature-controls>
+            </finys-feature-controls>
+            <div class="finys-feature">
+                <checkbox-preview></checkbox-preview>
+            </div>
+            <finys-code-viewer></finys-code-viewer>
+        `
     }
 }
 

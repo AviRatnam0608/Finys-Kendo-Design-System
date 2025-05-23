@@ -338,7 +338,6 @@ class FinysCheckbox extends HTMLInputElement {
     connectedCallback() {
         this.setAttribute("type", "checkbox");
         this.setAttribute("data-role", "checkbox");
-        this.setAttribute("id", "finys-checkbox-input");
         this.classList.add("f-checkbox");
 
         this.getAttribute("label");

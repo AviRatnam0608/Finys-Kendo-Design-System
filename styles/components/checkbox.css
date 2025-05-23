@@ -1,11 +1,11 @@
 .f-checkbox {
     background-color: var(--neutral-white);
-    border: 0.0625rem solid var(--neutral-light); /* 1px */
+    border: 0.0625em solid var(--neutral-light); /* 1px */
   }
   
   .f-checkbox:hover {
     background-color: var(--neutral-ultra-light);
-    border: 0.0625rem solid var(--neutral);      /* 1px */
+    border: 0.0625em solid var(--neutral);      /* 1px */
   }
   
   .f-checkbox:checked,
@@ -17,26 +17,35 @@
   
   .f-checkbox:checked:focus,
   .f-checkbox.k-checked.k-focus {
-    /* 2px outline → 0 0 0 0.125rem */
-    box-shadow: 0 0 0 0.125rem color-mix(in srgb, var(--primary) 30%, transparent);
+    /* 2px outline → 0 0 0 0.125em */
+    box-shadow: 0 0 0 0.125em color-mix(in srgb, var(--primary) 30%, transparent);
   }
   
-  /* Remove default checkmark so we can draw our own */
+  /* emove default checkmark so we can draw our own */
   input[type="checkbox"] {
     accent-color: transparent;
   }
 
   .k-checkbox-md {
-    width: 1rem;
-    height: 1rem;
+    width: 1em;
+    height: 1em;
+  }
+
+  .k-checkbox-label {
+    margin-left: 0.375em;
+  }
+
+  .f-checkbox + .k-checkbox-label {
+    font-size: 1em;
   }
   
+  
   /* Draw the Phosphor icon on :checked */
-  /* 1.25em (~20px) → 1.25rem */
+  /* 1.25em (~20px) → 1.25em */
   /* input[type="checkbox"]:checked:after {
     font-family: "Phosphor";
     content: "\e182";
-    font-size: 1.25rem;
+    font-size: 1.25em;
     font-weight: 100;
     color: var(--neutral-white);
   } */
