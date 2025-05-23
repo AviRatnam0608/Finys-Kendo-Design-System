@@ -7,7 +7,7 @@ class NavbarPreview extends HTMLElement {
     }
 
     createNavbar() {
-        return document.createElement('f-nav-bar');
+        return document.createElement('finys-navbar');
     }
 
     init() {

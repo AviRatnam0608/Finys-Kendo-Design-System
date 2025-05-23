@@ -1,4 +1,4 @@
-class FNavBar extends HTMLElement {
+class FNavbar extends HTMLElement {
   static navBarMenuItems = [
     {
       label: "Accounting",
@@ -193,10 +193,10 @@ class FNavBar extends HTMLElement {
   
   // Making main Nav wrappper -> contains all nav item
   static createMainNavWrapper(){
-    FNavBar.navigationMainWrapper = document.createElement("div");
-    FNavBar.navigationMainWrapper.classList.add("f-navigation-header-main");
-    FNavBar.navigationMainWrapper.setAttribute("data-role", "view");
-    FNavBar.navigationMainWrapper.setAttribute("id", "nav-header");
+    FNavbar.navigationMainWrapper = document.createElement("div");
+    FNavbar.navigationMainWrapper.classList.add("f-navigation-header-main");
+    FNavbar.navigationMainWrapper.setAttribute("data-role", "view");
+    FNavbar.navigationMainWrapper.setAttribute("id", "nav-header");
   }
 
   static buildlist(arr, parentUl){
@@ -227,11 +227,11 @@ class FNavBar extends HTMLElement {
         const subli = document.createElement("li");
         subUl.classList.add("f-quick-action-ul");
         subUl.appendChild(subli);
-        subli.appendChild(FNavBar._buildQuickActionsPanel(item));
+        subli.appendChild(FNavbar._buildQuickActionsPanel(item));
         li.appendChild(subUl);
       } else if (item.subitems && item.subitems.length) {
         const subUl = document.createElement("ul");
-        FNavBar.buildlist(item.subitems, subUl);
+        FNavbar.buildlist(item.subitems, subUl);
         li.appendChild(subUl);
       }
   
@@ -284,7 +284,7 @@ class FNavBar extends HTMLElement {
     // Company Logo
     const img = document.createElement("img");
     img.classList.add("f-company-logo");
-    img.src = FNavBar.logoUrl;
+    img.src = FNavbar.logoUrl;
     img.alt = "Company Logo";
 
     const navigationOptionWrapper = document.createElement("div");
@@ -300,23 +300,23 @@ class FNavBar extends HTMLElement {
     const navigationIconsWrapperSection = document.createElement("div");
     navigationIconsWrapperSection.classList.add("f-avatar-section");
 
-    FNavBar.buildlist(FNavBar.navBarMenuItems, ul);
+    FNavbar.buildlist(FNavbar.navBarMenuItems, ul);
     navigationOptionWrapper.appendChild(ul);
 
-    FNavBar.navigationMainWrapper.appendChild(navigationOptions);
+    FNavbar.navigationMainWrapper.appendChild(navigationOptions);
     navigationOptions.appendChild(img);
     navigationOptions.appendChild(navigationOptionWrapper);
   }
 
   static createSearchAndProfileGroup(vm, iconsList, userName, userImgUrl) {
     const container = document.createElement("div");
-    container.classList.add("f-nav-bar-rhs-group");
+    container.classList.add("finys-navbar-rhs-group");
 
     // 1) build the search+icon row
-    const searchRow = FNavBar._createSearchAndShortcutContainer(vm, iconsList);
+    const searchRow = FNavbar._createSearchAndShortcutContainer(vm, iconsList);
 
     // 2) build the avatar/profile
-    const avatarBox = FNavBar._createAvatarContainer(userName, userImgUrl);
+    const avatarBox = FNavbar._createAvatarContainer(userName, userImgUrl);
 
     container.appendChild(searchRow);
     container.appendChild(avatarBox);
@@ -347,7 +347,7 @@ class FNavBar extends HTMLElement {
     const actionIcons = document.createElement("div");
     actionIcons.classList.add("f-action-icons-container");
 
-    for (let iconName of FNavBar.iconsOptionsList) {
+    for (let iconName of FNavbar.iconsOptionsList) {
         if (iconName === "f-divider") {
           const hr = document.createElement("hr");
           hr.classList.add("f-divider");
@@ -391,18 +391,18 @@ class FNavBar extends HTMLElement {
     // clear out any previous content
     this.innerHTML = "";
     
-    FNavBar.createMainNavWrapper();
-    FNavBar.createNavigationMenuItems(this);
+    FNavbar.createMainNavWrapper();
+    FNavbar.createNavigationMenuItems(this);
 
-    const rightGroup = FNavBar.createSearchAndProfileGroup(
+    const rightGroup = FNavbar.createSearchAndProfileGroup(
       this.vm,
-      FNavBar.iconsList,
+      FNavbar.iconsList,
       this.getAttribute("user-name"),
       this.getAttribute("user-img")
     );
-    FNavBar.navigationMainWrapper.appendChild(rightGroup);
+    FNavbar.navigationMainWrapper.appendChild(rightGroup);
     
-    this.appendChild(FNavBar.navigationMainWrapper);
+    this.appendChild(FNavbar.navigationMainWrapper);
   }
 }
 
@@ -574,7 +574,7 @@ class FinysSettingsMenu extends HTMLButtonElement {
 }
 
 
-customElements.define("f-nav-bar", FNavBar);
+customElements.define("finys-navbar", FNavbar);
 customElements.define(
   "f-header-search-container",
   FHeaderSearchElementContainer
