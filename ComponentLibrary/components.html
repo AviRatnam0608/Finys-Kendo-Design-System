@@ -275,21 +275,6 @@
     </div>
   </section>
 
-  <hr />
-  <section>
-    <h1>Grid Controls</h1>
-    <div class="section">
-      <div class="f-grid" data-role="grid" data-editable="true" data-columns="[
-                        { 'field': 'id', 'width': 270 },
-                        { 'field': 'name' }
-                     ]"
-        data-pageable="{refresh:true, pageable:true, pageSize:10, pageSizes:[10,20,30,40,50,60,70,80,90,100], responsive: false}"
-        data-sortable="true" data-filterable="true" data-scrollable="true" data-bind="source: products,
-                   visible: isVisible,
-                   events: { dataBound: showGridCounter }" style="height: 400px"></div>
-    </div>
-  </section>
-
   <hr/>
   <section>
     <h1>Checkboxes</h1>
@@ -356,25 +341,6 @@
 </body>
 
 <script>
-
-  // function showGridCounter(){
-  //   const regex = /(?<start>\d+)\s*-\s*(?<end>\d+)\s*of\s*(?<total>\d+)/i;
-  //   const stringItem = $(".f-grid .k-pager-info.k-label").text();
-
-  //   const { groups: { start, end, total } = {} } = stringItem.match(regex) || {};
-
-  //   $(".f-grid .k-pager-info.k-label").html(`
-  //     <span>Items ${start} - ${end}  </span>
-  //     <span style="
-  //         color: var(--neutral);
-  //         margin-left: 4px;
-  //     "> of ${total}</span>`
-  //   );
-  // }
-
-  //isSelected: basicDropdownValue
-
-
   $(".f-group-dropdown-input").on("focus", function (e) {
     $(e.currentTarget).next().addClass("f-focus");
   });
