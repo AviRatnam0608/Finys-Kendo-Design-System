@@ -11,8 +11,10 @@
     <main class="claims-summary-main-content">
         <div
             is="finys-nested-grid"
+            class="f-grid"
             data-finys-label="Reserves"
             data-finys-tag="headerTagValue"
+            data-pageable="{refresh:true, pageSizes:[5,10,30,100]}"
             data-finys-header-buttons="
                 <button is='finys-button' data-bind='click: clickAddReserve'><i class='ph ph-plus'></i><span>Add Reserve</span></button>
                 <button is='finys-button' data-bind='click: clickEditReserve'><i class='ph ph-pencil-simple-line'></i><span>Edit Reserve</span></button>

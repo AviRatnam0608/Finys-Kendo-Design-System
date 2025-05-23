@@ -370,19 +370,6 @@
     isModalSmallVisible: false,
     isModalEnabled: true,
     isDisabled: false,
-    showGridCounter: function () {
-      const regex = /(?<start>\d+)\s*-\s*(?<end>\d+)\s*of\s*(?<total>\d+)/i;
-      const stringItem = $(".f-grid .k-pager-info.k-label").text();
-      const { groups: { start, end, total } = {} } = stringItem.match(regex) || {};
-
-      $(".f-grid .k-pager-info.k-label::before").html(`
-          <span>Items ${start} - ${end}  </span>
-          <span style="
-              color: var(--neutral);
-              margin-left: 4px;
-          "> of ${total}</span>`
-      );
-    },
     onChange: function (e) {
       console.log(
         "event :: change (" + (e.checked ? "checked" : "unchecked") + ")"

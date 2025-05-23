@@ -108,12 +108,28 @@ class FinysDetailedDropDownList extends HTMLInputElement {
 class FinysGrid extends HTMLDivElement {
     // do not include events: {detailInit}, this causes misalignment of columns
     connectedCallback() {
+        this.classList.add("f-grid");
         this.setAttribute('data-role', 'grid');
         this.setAttribute('data-toolbar', this.getAttribute('data-toolbar') || "[{template: kendo.template($('#table-header').html())}]")
         this.setAttribute('data-scrollable', this.getAttribute('data-scrollable') || 'false');
         if(!document.getElementById('table-header')) {
             document.querySelector('body').appendChild(this.getHeaderTemplate())
         }
+        this.showGridCounter();
+    }
+
+    showGridCounter() {
+        const regex = /(?<start>\d+)\s*-\s*(?<end>\d+)\s*of\s*(?<total>\d+)/i;
+        const stringItem = $(".f-grid .k-pager-info.k-label").text();
+        const { groups: { start, end, total } = {} } = stringItem.match(regex) || {};
+  
+        $(".f-grid .k-pager-info.k-label").html(`
+            <span>Items ${start} - ${end}  </span>
+            <span style="
+                color: var(--neutral);
+                margin-left: 4px;
+            "> of ${total}</span>`
+        );
     }
 
     getHeaderTemplate() {
