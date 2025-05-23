@@ -22,9 +22,9 @@
   }
   
   /* emove default checkmark so we can draw our own */
-  input[type="checkbox"] {
+  /* input[type="checkbox"] {
     accent-color: transparent;
-  }
+  } */
 
   .k-checkbox-md {
     width: 1em;

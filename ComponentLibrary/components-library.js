@@ -357,13 +357,11 @@ class FinysCheckbox extends HTMLInputElement {
     }
 }
 
-class FinysRadioButton extends HTMLInputElement {    
+class FinysRadioButton extends HTMLInputElement {
     connectedCallback() {
-        this.setAttribute("type", "radio");
-        this.setAttribute("data-role", "radio");
-        this.classList.add("k-radio");
-        this.classList.add("k-radio-md");
-        this.classList.add("f-radiobutton");
+      // you can still tweak classes/attributes here
+      this.classList.add("f-radiobutton", "k-radio", "k-radio-md");
+      this.setAttribute("data-role", "radiobutton");
     }
 }
 

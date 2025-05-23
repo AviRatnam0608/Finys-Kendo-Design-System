@@ -232,9 +232,6 @@
     color: var(--neutral-lighter)
 }
 
-.k-popup{
-    background: var(--header-gradient)
-}
 .k-group .k-menu-group .k-reset .k-menu-group-md{
     background: var(--header-gradient)
 

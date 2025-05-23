@@ -15,6 +15,12 @@
     border-color: var(--primary);
   }
 
+  .k-radio:checked:before {
+    background-color: currentColor;
+    border-radius: 50%;
+    width: 0.375em;
+    height: 0.375em;
+  }
 
   .k-radio-md {
     width: 1em !important;
@@ -29,10 +35,14 @@
     font-size: 1em;
   }
 
+  /* .k-radio:checked {
+    background-size: 0.575em;
+  } */
+
   .k-radio:checked:focus, .k-radio.k-checked.k-focus {
     box-shadow: 0 0 0 2px 
     color-mix(in srgb, var(--primary) 30%, transparent);
-  }
+  } 
   
   /* Draw the Phosphor icon on :checked */
   /* 1.25em (~20px) → 1.25em */
