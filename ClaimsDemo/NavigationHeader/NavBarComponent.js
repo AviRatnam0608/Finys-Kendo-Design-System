@@ -145,6 +145,13 @@ class FNavbar extends HTMLElement {
     "settings",
   ];
 
+  static userInfo = [
+   { userName: "Lebron James",
+    userRole: "Claims Manager",
+    userImg: "",
+    joinDate: "3/28/25"}
+  ]
+
   // add static vars here
   static navigationMainWrapper = document.createElement("div");
 
@@ -375,12 +382,26 @@ class FNavbar extends HTMLElement {
     img.src = userImgUrl;
     img.alt = "User Avatar";
 
+    // Make this a menu
     const nameSpan = document.createElement("span");
     nameSpan.classList.add("f-text-tiny", "f-weight-medium");
     nameSpan.innerText = userName;
 
     const caret = document.createElement("i");
     caret.classList.add("ph-light", "ph-caret-down");
+
+    // const ul = document.createElement("ul");
+    // ul.id = thisElement.getAttribute("menu-id") || "nav-bar";
+    // ul.setAttribute("data-role", "menu");
+    // ul.style.width = "100%";
+
+    // const subUl = document.createElement("ul");
+    // const subli = document.createElement("li");
+    // subUl.classList.add("f-quick-action-ul");
+    // subUl.appendChild(subli);
+    // subli.appendChild(FNavbar._buildQuickActionsPanel(item));
+    // li.appendChild(subUl);
+
 
     avatarContainer.append(img, nameSpan, caret);
     return avatarContainer;
