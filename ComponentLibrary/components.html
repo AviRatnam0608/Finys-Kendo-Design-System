@@ -576,7 +576,7 @@
   $(document).ready(() => {
     const obj = new FinysTimePicker({ target: '#dropdowns-container' })
     console.log(obj);
-    // kendo.bind($("body"), vm);
+    kendo.bind($("body"), vm);
     $('.f-generated-template').each((i, element) => {
             kendo.bind($(element), vm)
     })
