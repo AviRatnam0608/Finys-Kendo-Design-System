@@ -324,6 +324,77 @@ class FinysModal {
     }
 }
 
+class FinysWizardModal extends FinysModal {
+    destroyListenerFuncs = [];
+
+    destroy() {
+        super.destroy();
+        this.destroyListenerFuncs.forEach(func => func());
+    }
+
+    create() {
+        this.modalContainer = document.createElement('div', {
+            is: "finys-modal-target"
+        });
+        this.modalContainer.setAttribute('size', this.options.size || 'large');
+        document.querySelector('body').appendChild(this.modalContainer);
+        $(this.modalContainer).kendoWindow(this.options);
+        $(this.modalContainer).data('kendoWindow')
+            .toFront()
+            .center();
+        kendo.bind(this.modalContainer.querySelector('.f-modal-footer.f-generated-template'), this.vm)
+        const back = document.querySelector('.f-wizard-footer > button:first-child');
+        const next = document.querySelector('.f-wizard-footer > button:first-child + button');
+        this.registerListener('click', back, () => {
+            this.getKendoModal().element[0].querySelector('finys-progress-stepper').previous();
+            this.updateBackNextVisibility();
+        })
+        this.registerListener('click', next, () => {
+            this.getKendoModal().element[0].querySelector('finys-progress-stepper').next();
+            this.updateBackNextVisibility();
+        })
+        const stepper = this.getProgressStepper();
+        stepper.emitter.addEventListener('select-step', this.updateBackNextVisibility);
+        this.destroyListenerFuncs.push(() => stepper.emitter.removeEventListener('select-step', this.updateBackNextVisibility));
+    }
+
+    getProgressStepper = () => {
+        return this.getKendoModal().element[0].querySelector('finys-progress-stepper')
+    }
+
+    updateBackNextVisibility = () => {
+        const back = document.querySelector('.f-wizard-footer > button:first-child');
+        const next = document.querySelector('.f-wizard-footer > button:first-child + button');
+        const stepper = this.getProgressStepper();
+        const {step, max} = stepper.getStatus();
+        if(step >= max) {
+            next.classList.add('f-hidden');
+            back.classList.remove('f-hidden');
+        } else if(step <= 1) {
+            next.classList.remove('f-hidden');
+            back.classList.add('f-hidden');
+        } else {
+            next.classList.remove('f-hidden');
+            back.classList.remove('f-hidden');
+        }
+
+    }
+
+    renderFooter() {
+        return `
+        <div class='f-modal-footer f-wizard-footer f-generated-template'>
+            <button is="finys-button" class="f-button-secondary f-hidden">Back</button>
+            <button is="finys-button" class="f-button-primary">Next</button>
+        </div>
+    `
+    }
+
+    registerListener(event, obj, method) {
+        obj.addEventListener(event, method);
+        this.destroyListenerFuncs.push(() => obj.removeEventListener(event, method))
+    }
+}
+
 class FinysValidation extends HTMLElement {
     connectedCallback() {
         this.classList.add('f-validation', 'f-hidden');
@@ -381,12 +452,13 @@ class FinysProgressStepper extends HTMLElement {
         this.id = crypto.randomUUID();
         this.popoverId = `stepper-dropdown-${this.id}`;
         this.anchorName = `--menu-button-${this.id}`;
+        this.emitter = new EventTarget();
         this.vm = kendo.observable({
             currentStep: 1,
             onSelect: (e) => {
                 const value = e.step.options.index + 1;
-                this.updateMenuButton(value);
-                this.vm.set('currentStep', value);
+                this.setStep(value);
+                this.emitter.dispatchEvent(new CustomEvent('select-step', { detail: {step: value, max: this.max}}))
             }
         })
     }
@@ -401,12 +473,16 @@ class FinysProgressStepper extends HTMLElement {
         this.appendChild(this.nav);
         setTimeout(() => {
             kendo.bind(this, this.vm);
-
         }, 1)
     }
 
     disconnectedCallback() {
         this.destroyListenerFuncs.forEach(func => func());
+    }
+
+    setStep = (value) => {
+        this.updateMenuButton(value);
+        this.vm.set('currentStep', value);
     }
 
     setAttributes() {
@@ -451,6 +527,18 @@ class FinysProgressStepper extends HTMLElement {
     
     updateMenuButton(integer) {
         this.menuButton.querySelector('span:first-child').textContent = integer;
+    }
+
+    previous() {
+        this.setStep(this.vm.currentStep - 1);
+    }
+
+    next() {
+        this.setStep(this.vm.currentStep + 1);
+    }
+
+    getStatus() {
+        return {step: this.vm.get('currentStep'), max: this.max}
     }
 
     registerListener(event, obj, method) {

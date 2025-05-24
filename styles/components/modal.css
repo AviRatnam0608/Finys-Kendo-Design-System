@@ -191,3 +191,7 @@
     background-color: var(--primary-lightest);
     height: 0.0625em;
   }
+
+  .k-window-content .f-wizard-footer {
+    justify-content: space-between;
+  }
