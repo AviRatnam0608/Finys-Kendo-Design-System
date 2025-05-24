@@ -1,3 +1,19 @@
+class Events extends EventTarget {
+    static NAMES = {
+        UPDATED_STEP: 'updated-step',
+        SELECT_STEP: 'select-step'
+    }
+
+    on(event, handler) {
+        this.addEventListener(event, handler);
+        return () => this.removeEventListener(event, handler);
+    }
+
+    emit(event, detail) {
+        this.dispatchEvent(new CustomEvent(event, {detail}));
+    }
+}
+
 class FinysButton extends HTMLButtonElement {
     connectedCallback() {
         this.classList.add('f-button');
@@ -345,17 +361,19 @@ class FinysWizardModal extends FinysModal {
         kendo.bind(this.modalContainer.querySelector('.f-modal-footer.f-generated-template'), this.vm)
         const back = document.querySelector('.f-wizard-footer > button:first-child');
         const next = document.querySelector('.f-wizard-footer > button:first-child + button');
+        const stepper = this.getProgressStepper();
         this.registerListener('click', back, () => {
-            this.getKendoModal().element[0].querySelector('finys-progress-stepper').previous();
+            const step = this.getProgressStepper().previous();
             this.updateBackNextVisibility();
+            this.dispatchUpdatedStep(step);
         })
         this.registerListener('click', next, () => {
-            this.getKendoModal().element[0].querySelector('finys-progress-stepper').next();
+            const step = this.getProgressStepper().next();
             this.updateBackNextVisibility();
+            this.dispatchUpdatedStep(step);
         })
-        const stepper = this.getProgressStepper();
-        stepper.emitter.addEventListener('select-step', this.updateBackNextVisibility);
-        this.destroyListenerFuncs.push(() => stepper.emitter.removeEventListener('select-step', this.updateBackNextVisibility));
+        const destroyFunc = stepper.emitter.on(Events.NAMES.SELECT_STEP, this.updateBackNextVisibility);
+        this.destroyListenerFuncs.push(destroyFunc);
     }
 
     getProgressStepper = () => {
@@ -387,6 +405,10 @@ class FinysWizardModal extends FinysModal {
             <button is="finys-button" class="f-button-primary">Next</button>
         </div>
     `
+    }
+
+    dispatchUpdatedStep(step) {
+        this.getProgressStepper().emitter.emit(Events.NAMES.UPDATED_STEP, step);
     }
 
     registerListener(event, obj, method) {
@@ -452,15 +474,17 @@ class FinysProgressStepper extends HTMLElement {
         this.id = crypto.randomUUID();
         this.popoverId = `stepper-dropdown-${this.id}`;
         this.anchorName = `--menu-button-${this.id}`;
-        this.emitter = new EventTarget();
+        this.emitter = new Events();
         this.vm = kendo.observable({
             currentStep: 1,
             onSelect: (e) => {
                 const value = e.step.options.index + 1;
                 this.setStep(value);
-                this.emitter.dispatchEvent(new CustomEvent('select-step', { detail: {step: value, max: this.max}}))
+                this.emitter.emit(Events.NAMES.SELECT_STEP, {step: value, max: this.max})
             }
         })
+        const destroyFunc = this.emitter.on(Events.NAMES.UPDATED_STEP, this.setStepFromEvent)
+        this.destroyListenerFuncs.push(destroyFunc);
     }
 
     connectedCallback() {
@@ -531,14 +555,20 @@ class FinysProgressStepper extends HTMLElement {
 
     previous() {
         this.setStep(this.vm.currentStep - 1);
+        return this.vm.get('currentStep');
     }
 
     next() {
         this.setStep(this.vm.currentStep + 1);
+        return this.vm.get('currentStep');
     }
 
     getStatus() {
         return {step: this.vm.get('currentStep'), max: this.max}
+    }
+
+    setStepFromEvent = (e) => {
+        $(this.nav.querySelector('nav[data-role="stepper"]')).data('kendoStepper').select(e.detail - 1);
     }
 
     registerListener(event, obj, method) {
