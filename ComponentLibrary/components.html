@@ -296,6 +296,7 @@
   <section>
     <h1>Wizard</h1>
     <finys-progress-stepper
+      id="my-wizard"
       steps='[
         {"label":"1. Step One","selected":true},
         {"label":"2. Step Two"},
@@ -303,7 +304,18 @@
         {"label":"4. Step Four"}
       ]'
     >
-      
+      <div step="1">
+        <h1>Step 1</h1>
+        <p>
+          This will have various controls in it and they need
+          to be bound to the main view model.
+        </p>
+        <button is="finys-button" data-bind="click: testClick">Test Click</button>
+        <span data-bind="text: togglingValue"></span>
+      </div>
+      <div step="2"><h1>Step 2</h1></div>
+      <div step="3"><h1>Step 3</h1></div>
+      <div step="4"><h1>Step 4</h1></div>
     </finys-progress-stepper>
 
     <button 
@@ -313,38 +325,8 @@
     >
         Open Wizard
     </button>
-    <!-- <div class="f-progressbar-stepper-container">
-      <button class="f-progressbar-menu"><span>3</span>/<span>5</span></button>
-        <div 
-          class="f-progressbar"
-          data-role="progressbar"
-          data-min="0"
-          data-max="200"
-          data-bind="enabled: isEnabled,
-          visible: isVisible,
-          value: progressValue,
-          events: { start: onStart,
-            change: onChange,
-            complete: onComplete}"
-            style="width: 100%;"
-        >
-        </div>
-        <nav>
-          <span>Go to...</span>
-          <div
-          data-role="stepper"
-          data-orientation="vertical"
-          data-label="true"
-          data-linear="false"
-          data-steps="[
-          { 'label': '1. Step One', 'selected': true },
-          { 'label': '2. Step Two',  },
-          { 'label': '3. Step Three' }
-          ]"
-          >
-        </div>
-      </nav>
-    </div> -->
+
+    <my-shadow></my-shadow>
    
   </section>
 </body>
@@ -358,6 +340,7 @@
   });
   
   const vm = kendo.observable({
+    togglingValue: false,
     progressValue: "46",
     isChecked: true,
     isEnabled: true,
@@ -374,6 +357,7 @@
     },
     testClick: function () {
       console.log("test");
+      this.set('togglingValue', !this.togglingValue);
     },
     isClosable: true,
     isEnabled: false,
@@ -385,22 +369,41 @@
     },
     showWizard: function(e) {
       if(!this.myWizard) {
-
-        this.myWizard = new FinysWizardModal(
-          {
-            title: 'My Wizard',
-            content: {template: () => `
-              <finys-progress-stepper
-              steps='[
-                {"label":"1. Step One","selected":true},
-                {"label":"2. Step Two"},
-                {"label":"3. Step Three"},
-                {"label":"4. Step Four"}
-                ]'
-                >
-                </finys-progress-stepper>`}
-              }
-      )
+        this.myWizard = new FinysWizardModal({
+          title: 'My Wizard',
+          content: {template: () => `
+            <finys-progress-stepper
+            id="my-wizard-modal"
+            steps='[
+              {"label":"1. Step One","selected":true},
+              {"label":"2. Step Two"},
+              {"label":"3. Step Three"},
+              {"label":"4. Step Four"}
+              ]'
+              >
+                <div step="1">
+                  This is step 1
+                  <button 
+                    is="finys-button" 
+                    class="f-button-primary" 
+                    data-bind="click: testClick" 
+                  >
+                    Test click
+                    </button>
+                </div>
+                <div step="2">
+                  Step 2
+                </div>
+                <div step="3">
+                  Step 3
+                </div>
+                <div step="4">
+                  Step 4
+                </div>
+              </finys-progress-stepper>`}
+        })
+        this.myWizard.open();
+        return kendo.bind($('#my-wizard-modal'), this);
       }
       this.myWizard.open();
     },
@@ -608,9 +611,8 @@
     console.log(obj);
     kendo.bind($("body"), vm);
     $('.f-generated-template').each((i, element) => {
-            kendo.bind($(element), vm)
+      kendo.bind($(element), vm)
     })
-
 
     $("#finys-text-input-container")
       .kendoValidator()

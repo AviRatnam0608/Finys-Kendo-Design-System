@@ -1,7 +1,8 @@
 class Events extends EventTarget {
     static NAMES = {
         UPDATED_STEP: 'updated-step',
-        SELECT_STEP: 'select-step'
+        SELECT_STEP: 'select-step',
+        UPDATED_CONTENT: 'updated-content',
     }
 
     on(event, handler) {
@@ -469,17 +470,22 @@ class FinysTooltip extends HTMLElement {
 class FinysProgressStepper extends HTMLElement {
     destroyListenerFuncs = [];
 
+    get currentView() {
+        return this.viewIndex[this.vm.currentStep - 1];
+    }
+
     constructor() {
         super();
-        this.id = crypto.randomUUID();
-        this.popoverId = `stepper-dropdown-${this.id}`;
-        this.anchorName = `--menu-button-${this.id}`;
+        this.uuid = crypto.randomUUID();
+        this.popoverId = `stepper-dropdown-${this.uuid}`;
+        this.anchorName = `--menu-button-${this.uuid}`;
         this.emitter = new Events();
         this.vm = kendo.observable({
             currentStep: 1,
             onSelect: (e) => {
                 const value = e.step.options.index + 1;
                 this.setStep(value);
+                this.updateContent();
                 this.emitter.emit(Events.NAMES.SELECT_STEP, {step: value, max: this.max})
             }
         })
@@ -488,16 +494,32 @@ class FinysProgressStepper extends HTMLElement {
     }
 
     connectedCallback() {
-        this.classList.add('f-progressbar-stepper-container')
+        this.initContent();
+        this.classList.add('f-progressbar-stepper-container');
+        this.attachShadow({mode: 'open'});
+        const link = document.createElement('link');
+        link.setAttribute('rel', 'stylesheet');
+        link.setAttribute('href', 'https://kendo.cdn.telerik.com/themes/8.2.1/default/default-main.css');
+        const link2 = document.createElement('link');
+        link2.setAttribute('rel', 'stylesheet');
+        link2.setAttribute('href', '../styles/components/progress-stepper-shadow.css');
+        const link3 = document.createElement('link');
+        link3.setAttribute('rel', 'stylesheet');
+        link3.setAttribute('href', '../styles/components/stepper.css');
+        this.shadowRoot.appendChild(link);
+        this.shadowRoot.appendChild(link2);
+        this.shadowRoot.appendChild(link3);
         this.setAttributes();
+        this.container = document.createElement('div');
+        this.container.classList.add('container');
         this.menuButton = this.createProgressbarMenuButton();
-        this.appendChild(this.menuButton);
-        this.appendChild(this.createProgressbar());
+        this.container.appendChild(this.menuButton);
+        this.container.appendChild(this.createProgressbar());
         this.nav = this.createStepperNav();
-        this.appendChild(this.nav);
-        setTimeout(() => {
-            kendo.bind(this, this.vm);
-        }, 1)
+        this.container.appendChild(this.nav);
+        this.shadowRoot.appendChild(this.container);
+        this.shadowRoot.appendChild(document.createElement('slot'));
+        kendo.bind(this.container, this.vm);
     }
 
     disconnectedCallback() {
@@ -548,6 +570,11 @@ class FinysProgressStepper extends HTMLElement {
         popover.appendChild(nav);
         return popover;
     }
+
+    createContent() {
+        const content = document.createElement('article');
+        return content;
+    }
     
     updateMenuButton(integer) {
         this.menuButton.querySelector('span:first-child').textContent = integer;
@@ -555,11 +582,13 @@ class FinysProgressStepper extends HTMLElement {
 
     previous() {
         this.setStep(this.vm.currentStep - 1);
+        this.updateContent();
         return this.vm.get('currentStep');
     }
 
     next() {
         this.setStep(this.vm.currentStep + 1);
+        this.updateContent();
         return this.vm.get('currentStep');
     }
 
@@ -575,8 +604,21 @@ class FinysProgressStepper extends HTMLElement {
         obj.addEventListener(event, method);
         this.destroyListenerFuncs.push(() => obj.removeEventListener(event, method))
     }
-}
 
+    initContent() {
+        const elements = this.querySelectorAll('[step]');
+        this.viewIndex = elements;
+        this.updateContent();
+    }
+
+    updateContent() {
+        const elements = this.querySelectorAll('[step]');
+        elements.forEach(element => {
+            element.classList.add('f-display-none');
+        })
+        this.currentView.classList.remove('f-display-none');
+    }
+}
 
 customElements.define('finys-progress-stepper', FinysProgressStepper);
 customElements.define('finys-validation', FinysValidation)

@@ -155,3 +155,7 @@
 .f-hidden {
   visibility: hidden;
 }
+
+.f-display-none {
+  display: none;
+}

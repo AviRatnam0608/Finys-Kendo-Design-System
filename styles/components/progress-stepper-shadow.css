@@ -1,0 +1,98 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.f-progressbar-stepper-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.f-progressbar-menu {
+  text-align: right;
+  margin-bottom: 0.5rem;
+  margin-left: auto;
+  width: max-content;
+  cursor: pointer;
+  user-select: none;
+  background: none;
+  border: 0;
+}
+
+.f-progressbar-menu {
+  color: var(--primary);
+}
+
+.f-progressbar-menu::after {
+  font-family: "Phosphor" !important;
+  content: "\e136";
+}
+
+.f-progressbar-menu.f-progressbar-open::after {
+  font-family: "Phosphor" !important;
+  content: "\e13c";
+}
+
+.f-progressbar.k-progressbar {
+  opacity: 1;
+  border-radius: 0.375rem;
+}
+
+.f-progressbar .k-progressbar-value {
+  background-color: var(--primary);
+  border-radius: 0.375rem;
+}
+
+div[popover] {
+  --_box-shadow: 0px 4px 6px -2px #00000008, 
+  0px 12px 16px -4px #00000014,
+  0px 0px 0px 1px #E5E9EE;
+  border-radius: 0.375rem;
+  border: 0;
+  overflow: hidden;
+  position:absolute;
+  margin: 0;
+  inset: auto;
+  top: anchor(bottom);
+  right: anchor(right);
+  margin-block-start: 1.2rem;
+  height: 0;
+  transition: display 250ms, height 250ms;
+  transition-behavior: allow-discrete;
+  box-shadow: var(--_box-shadow);
+}
+
+div[popover]:popover-open {
+  height: auto;
+  @starting-style {
+    height: 0;
+  }
+}
+
+nav {
+  width: max-content;
+  overflow: hidden;
+}
+
+nav {
+  padding: 1rem;
+}
+
+nav > span {
+  font-size: 0.875rem;
+  color: var(--neutral);
+}
+
+.k-progressbar-horizontal {
+  height: 0.5rem;
+}
+
+.k-progress-status {
+  display: none;
+}
+
+.k-stepper .k-step-text {
+  font-weight: 500;
+  font-size: 1rem;
+}
