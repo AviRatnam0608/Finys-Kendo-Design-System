@@ -305,6 +305,14 @@
     >
       
     </finys-progress-stepper>
+
+    <button 
+      is="finys-button"
+      class="f-primary f-button-large"
+      data-bind="click: showWizard"
+    >
+        Open Wizard
+    </button>
     <!-- <div class="f-progressbar-stepper-container">
       <button class="f-progressbar-menu"><span>3</span>/<span>5</span></button>
         <div 
@@ -374,6 +382,27 @@
       this.set("isModalMediumVisible", false);
       this.set("isModalSmallVisible", false);
       this.set("isModalEnabled", true);
+    },
+    showWizard: function(e) {
+      if(!this.myWizard) {
+
+        this.myWizard = new FinysWizardModal(
+          {
+            title: 'My Wizard',
+            content: {template: () => `
+              <finys-progress-stepper
+              steps='[
+                {"label":"1. Step One","selected":true},
+                {"label":"2. Step Two"},
+                {"label":"3. Step Three"},
+                {"label":"4. Step Four"}
+                ]'
+                >
+                </finys-progress-stepper>`}
+              }
+      )
+      }
+      this.myWizard.open();
     },
     showModalLarge: function (e) {
       if(!this.largeModal) {
