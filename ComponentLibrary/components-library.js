@@ -380,8 +380,13 @@ class FinysProgressStepper extends HTMLElement {
         this.popoverId = `stepper-dropdown-${this.id}`;
         this.anchorName = `--menu-button-${this.id}`;
         this.vm = kendo.observable({
-            currentStep: 1
-        });
+            currentStep: 1,
+            onSelect: (e) => {
+                const value = e.step.options.index + 1;
+                this.updateMenuButton(value);
+                this.vm.set('currentStep', value);
+            }
+        })
     }
 
     connectedCallback() {
@@ -392,8 +397,10 @@ class FinysProgressStepper extends HTMLElement {
         this.appendChild(this.createProgressbar());
         this.nav = this.createStepperNav();
         this.appendChild(this.nav);
-        // this.registerListener('click', document, (e) => this.handleClickOutside(e))
-        kendo.bind(this, this.vm);
+        setTimeout(() => {
+            kendo.bind(this, this.vm);
+
+        }, 1)
     }
 
     disconnectedCallback() {
@@ -410,8 +417,7 @@ class FinysProgressStepper extends HTMLElement {
         menu.style['anchor-name'] = this.anchorName;
         menu.classList.add('f-progressbar-menu');
         menu.setAttribute('popovertarget', this.popoverId);
-        // this.registerListener('click', menu, () => this.handleMenuClick());
-        menu.innerHTML = `<span data-bind="text: currentStep">${this.currentStep}</span>/<span>${this.max}`
+        menu.innerHTML = `<span>${this.vm.currentStep}</span>/<span>${this.max}</span>`
         return menu;
     }
 
@@ -436,19 +442,14 @@ class FinysProgressStepper extends HTMLElement {
         nav.setAttribute('data-label', 'true');
         nav.setAttribute('data-linear', 'false');
         nav.setAttribute('data-steps', this.steps);
+        nav.setAttribute('data-bind', "events: {select: onSelect}")
         popover.appendChild(nav);
         return popover;
     }
-
-    // handleMenuClick() {
-    //     this.nav.classList.remove('f-hidden');
-    // }
-
-    // handleClickOutside(e) {
-    //     if(!this.nav.contains(e.target) && !this.menuButton.contains(e.target)) {
-    //         this.nav.classList.add('f-hidden');
-    //     }
-    // }
+    
+    updateMenuButton(integer) {
+        this.menuButton.querySelector('span:first-child').textContent = integer;
+    }
 
     registerListener(event, obj, method) {
         obj.addEventListener(event, method);
