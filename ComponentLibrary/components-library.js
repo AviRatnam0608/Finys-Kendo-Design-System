@@ -496,29 +496,8 @@ class FinysProgressStepper extends HTMLElement {
     connectedCallback() {
         this.initContent();
         this.classList.add('f-progressbar-stepper-container');
-        this.attachShadow({mode: 'open'});
-        const link = document.createElement('link');
-        link.setAttribute('rel', 'stylesheet');
-        link.setAttribute('href', 'https://kendo.cdn.telerik.com/themes/8.2.1/default/default-main.css');
-        const link2 = document.createElement('link');
-        link2.setAttribute('rel', 'stylesheet');
-        link2.setAttribute('href', '../styles/components/progress-stepper-shadow.css');
-        const link3 = document.createElement('link');
-        link3.setAttribute('rel', 'stylesheet');
-        link3.setAttribute('href', '../styles/components/stepper.css');
-        this.shadowRoot.appendChild(link);
-        this.shadowRoot.appendChild(link2);
-        this.shadowRoot.appendChild(link3);
         this.setAttributes();
-        this.container = document.createElement('div');
-        this.container.classList.add('container');
-        this.menuButton = this.createProgressbarMenuButton();
-        this.container.appendChild(this.menuButton);
-        this.container.appendChild(this.createProgressbar());
-        this.nav = this.createStepperNav();
-        this.container.appendChild(this.nav);
-        this.shadowRoot.appendChild(this.container);
-        this.shadowRoot.appendChild(document.createElement('slot'));
+        this.createShadowRoot();
         kendo.bind(this.container, this.vm);
     }
 
@@ -534,6 +513,31 @@ class FinysProgressStepper extends HTMLElement {
     setAttributes() {
         this.steps = this.getAttribute('steps');
         this.max = JSON.parse(this.steps).length;
+    }
+
+    createShadowRoot() {
+        this.attachShadow({mode: 'open'});
+        const kendoStyles = document.createElement('link');
+        kendoStyles.setAttribute('rel', 'stylesheet');
+        kendoStyles.setAttribute('href', 'https://kendo.cdn.telerik.com/themes/8.2.1/default/default-main.css');
+        const componentStyles = document.createElement('link');
+        componentStyles.setAttribute('rel', 'stylesheet');
+        componentStyles.setAttribute('href', '../styles/components/progress-stepper-shadow.css');
+        const stepperStyles = document.createElement('link');
+        stepperStyles.setAttribute('rel', 'stylesheet');
+        stepperStyles.setAttribute('href', '../styles/components/stepper.css');
+        this.shadowRoot.appendChild(link);
+        this.shadowRoot.appendChild(link2);
+        this.shadowRoot.appendChild(link3);
+        this.container = document.createElement('div');
+        this.container.classList.add('container');
+        this.menuButton = this.createProgressbarMenuButton();
+        this.container.appendChild(this.menuButton);
+        this.container.appendChild(this.createProgressbar());
+        this.nav = this.createStepperNav();
+        this.container.appendChild(this.nav);
+        this.shadowRoot.appendChild(this.container);
+        this.shadowRoot.appendChild(document.createElement('slot'));
     }
 
     createProgressbarMenuButton() {
