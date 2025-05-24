@@ -310,10 +310,12 @@ class FinysModal {
     }
 
     open() {
-        if(!this.getKendoModal()) {
+        const modal = this.getKendoModal();
+        if(!modal) {
             this.create();
         } else {
-            this.getKendoModal().open();
+            modal.open();
+            modal.toFront().center();
         }
     }
 
