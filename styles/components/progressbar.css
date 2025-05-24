@@ -17,7 +17,6 @@
 
 .f-progressbar-menu {
   color: var(--primary);
-  anchor-name: --f-progressbar-menu;
 }
 
 .f-progressbar-menu::after {
@@ -41,25 +40,34 @@
 }
 
 .f-progressbar-stepper-container div[popover] {
+  --_box-shadow: 0px 4px 6px -2px #00000008, 
+  0px 12px 16px -4px #00000014,
+  0px 0px 0px 1px #E5E9EE;
+  border-radius: 0.375rem;
   border: 0;
-  overflow: visible;
+  overflow: hidden;
   position:absolute;
   margin: 0;
   inset: auto;
   top: anchor(bottom);
   right: anchor(right);
   margin-block-start: 1.2rem;
+  height: 0;
+  transition: display 250ms, height 250ms;
+  transition-behavior: allow-discrete;
+  box-shadow: var(--_box-shadow);
+}
+
+.f-progressbar-stepper-container div[popover]:popover-open {
+  height: auto;
+  @starting-style {
+    height: 0;
+  }
 }
 
 .f-progressbar-stepper-container nav {
-  --_box-shadow: 0px 4px 6px -2px #00000008, 
-  0px 12px 16px -4px #00000014,
-  0px 0px 0px 1px #E5E9EE;
-  border-radius: 0.375rem;
   width: max-content;
   overflow: hidden;
-  height: auto;
-  box-shadow: var(--_box-shadow);
 }
 
 .f-progressbar-stepper-container nav {
