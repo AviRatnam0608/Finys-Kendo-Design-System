@@ -55,10 +55,10 @@ class ProgressStepper extends HTMLElement {
         kendoStyles.setAttribute('href', 'https://kendo.cdn.telerik.com/themes/8.2.1/default/default-main.css');
         const componentStyles = document.createElement('link');
         componentStyles.setAttribute('rel', 'stylesheet');
-        componentStyles.setAttribute('href', '../styles/components/progress-stepper-shadow.css');
+        componentStyles.setAttribute('href', './styles/components/progress-stepper-shadow.css');
         const stepperStyles = document.createElement('link');
         stepperStyles.setAttribute('rel', 'stylesheet');
-        stepperStyles.setAttribute('href', '../styles/components/stepper.css');
+        stepperStyles.setAttribute('href', './styles/components/stepper.css');
         this.shadowRoot.appendChild(kendoStyles);
         this.shadowRoot.appendChild(componentStyles);
         this.shadowRoot.appendChild(stepperStyles);
