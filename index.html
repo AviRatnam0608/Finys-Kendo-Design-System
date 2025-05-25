@@ -4,15 +4,43 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>Index</title>
+    <script defer type="module" src="/src/main.js"></script>
+    <link href="https://kendo.cdn.telerik.com/themes/8.2.1/default/default-main.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="../../kendo.all.min.js"></script>
+    <script src="../../kendo-ui-jquery-license.js"></script>
+    <style>
+      body {
+        background-color: #242424;
+        padding: 5rem;
+        display: grid;
+        place-items: left;
+        gap: 3rem;
+      }
+
+      button {
+        width: max-content;
+      }
+
+      a {
+        color: white;
+        text-decoration: underline;
+        text-underline-offset: 0.3em;
+        font-size: 1rem;
+        width: max-content;
+      }
+
+      a:hover {
+        color: var(--primary-lighter)
+      }
+    </style>
   </head>
   <body>
     <div id="app"></div>
-    <script defer type="module" src="/src/main.js"></script>
     <a href="src/ClaimsDemo/index.html">Claims Demo</a>
     <a href="src/ComponentLibrary/component-library-nav.html">Library</a>
     <a href="src/ComponentLibrary/components.html">Component Demos</a>
     <a href="src/ComponentLibrary/grid-layout.html">Layout</a>
-    <button is="finys-button">Test</button>
   </body>
 </html>
