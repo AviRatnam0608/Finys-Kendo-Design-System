@@ -1,4 +1,4 @@
-.f-timepicker {
+.f-timepicker.k-timepicker {
     flex-direction: row-reverse;
 }
 
@@ -70,11 +70,9 @@
 }
 
 span.f-timepicker.f-selected > input.f-timepicker,
-span.f-timepicker.f-selected > button.k-input-button.k-button-solid {
-    background-color: var(--neutral-white);
-}
-
-span.f-timepicker.f-selected > button.k-input-button.k-button-solid:hover {
+span.f-timepicker.f-selected > button.k-input-button.k-button-solid,
+span.f-timepicker.f-selected > button.k-input-button.k-button-solid:hover,
+span.f-timepicker.f-selected.k-hover:hover > input.f-timepicker {
     background-color: var(--neutral-white);
 }
 
