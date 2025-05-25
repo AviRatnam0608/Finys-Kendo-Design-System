@@ -53,3 +53,4 @@ class CheckboxPreview extends HTMLElement {
 }
 
 customElements.define('checkbox-preview', CheckboxPreview);
+export {CheckboxPreview};

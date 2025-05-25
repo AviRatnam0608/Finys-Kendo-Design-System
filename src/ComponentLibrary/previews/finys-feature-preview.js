@@ -125,3 +125,11 @@ customElements.define('finys-code-viewer', FinysCodeViewer)
 customElements.define('finys-feature-controls', FinysFeatureControls);
 customElements.define('finys-feature-preview', FinysFeaturePreview);
 customElements.define('finys-feature', FinysFeature);
+
+export {
+    FinysCodeCopyButton, 
+    FinysCodeViewer, 
+    FinysFeatureControls, 
+    FinysFeaturePreview, 
+    FinysFeature
+}

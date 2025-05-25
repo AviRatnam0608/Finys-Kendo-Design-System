@@ -28,3 +28,4 @@ class NavbarPreview extends HTMLElement {
 }
 
 customElements.define('navbar-preview', NavbarPreview);
+export {NavbarPreview};

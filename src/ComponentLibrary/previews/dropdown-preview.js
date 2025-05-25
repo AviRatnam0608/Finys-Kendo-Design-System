@@ -107,7 +107,7 @@ class DropdownPreview extends HTMLElement {
     }
 
     createDropdown() {
-        const dropdown = document.createElement('input', {is: 'finys-dropdownlist'});
+        const dropdown = document.createElement('input', {is: 'finys-dropdown-list'});
         dropdown.setAttribute('data-bind',
             'value: basicDropdownValue, source: listData, isSelected: basicDropdownValue'
         )
@@ -115,7 +115,7 @@ class DropdownPreview extends HTMLElement {
     }
 
     createGroupDropdown() {
-        const dropdown = document.createElement('input', {is: 'finys-dropdownlist'});
+        const dropdown = document.createElement('input', {is: 'finys-dropdown-list'});
         dropdown.setAttribute('data-bind',
             'value: basicDropdownValue, source: groupListData, isSelected: basicDropdownValue'
         )
@@ -124,7 +124,7 @@ class DropdownPreview extends HTMLElement {
     }
 
     createTemplateDropdown() {
-        const dropdown = document.createElement('input', {is: 'finys-detailed-dropdownlist'});
+        const dropdown = document.createElement('input', {is: 'finys-detailed-dropdown-list'});
         dropdown.setAttribute('data-text-field', 'AgentName');
         dropdown.setAttribute('data-value-field', 'AgentCode');
         dropdown.setAttribute('data-detail-left', 'AgencyCode');
@@ -178,3 +178,4 @@ class DropdownPreview extends HTMLElement {
 }
 
 customElements.define('dropdown-preview', DropdownPreview);
+export {DropdownPreview};
