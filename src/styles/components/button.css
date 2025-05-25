@@ -58,6 +58,7 @@
     background-color: transparent;
     background: transparent;
     box-shadow: none;
+    color: var(--primary);
 }
 
 .f-button-tertiary:hover {
@@ -88,6 +89,7 @@
 
 .f-button.f-button-small {
     font-size: var(--font-size-small);
+    padding: 0.67em 1.33em;
 }
 
 .f-button.f-button-xsmall {
