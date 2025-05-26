@@ -308,6 +308,10 @@
         Open Wizard
     </button>   
   </section>
+
+  <section>
+    <finys-textarea label="Textarea Label" data-bind="value: textareaValue"></finys-textarea>
+  </section>
 </body>
 
 <script type="module">
@@ -321,6 +325,7 @@
   });
   
   const vm = kendo.observable({
+    textareaValue: "this is some text",
     togglingValue: false,
     progressValue: "46",
     isChecked: true,

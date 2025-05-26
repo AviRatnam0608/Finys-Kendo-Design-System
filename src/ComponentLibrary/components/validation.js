@@ -7,6 +7,12 @@ class Validation extends HTMLElement {
         this.textContent = '';
         this.appendChild(this.innerSpan)
     }
+
+    set(content) {
+        this.textContent = content;
+        this.show();
+    }
+
     show() {
         this.highlightAssociatedElement();
         this.classList.remove('f-hidden');
