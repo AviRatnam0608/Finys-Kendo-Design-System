@@ -9,6 +9,7 @@
         linear-gradient(0deg, var(--neutral-lightest), var(--neutral-lightest)) padding-box,
         linear-gradient(0deg, rgba(19, 21, 25, 0.3) 0%, rgba(97, 107, 127, 0.21) 100%) border-box;
     cursor: pointer;
+    width: max-content;
 }
 
 .f-button:hover {
