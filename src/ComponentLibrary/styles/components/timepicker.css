@@ -42,6 +42,7 @@
     padding-left: 10px;
     color: var(--neutral-dark);
     border: 0;
+    font-size: inherit;
 }
 
 .f-timepicker > button.k-input-button.k-button-solid.k-button-solid-base:hover {
