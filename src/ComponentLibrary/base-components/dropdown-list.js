@@ -7,6 +7,7 @@ class DropdownList extends HTMLInputElement {
         this.setAttribute('data-value-field', this.getAttribute('data-value-field') || 'id');
         this.setAttribute('data-height', this.getAttribute('data-height') || '300');
         this.setAttribute('data-option-label', this.getAttribute('data-option-label') || 'Select an option');
+        // this.after(document.createElement('finys-validation'));
     }
 }
 
