@@ -45,10 +45,12 @@
   <section>
     <h1>Dropdown</h1>
     <div id="dropdowns-container" class="container">
-      <input is="finys-dropdown-list" class="my-dropdown" data-text-field="name" data-bind="value: basicDropdownValue,
-                            source: listData, 
-                            isSelected: basicDropdownValue" />
-      <finys-validation>This is a validation</finys-validation>
+      <div>
+        <input is="finys-dropdown-list" class="my-dropdown" data-text-field="name" data-bind="value: basicDropdownValue,
+        source: listData, 
+        isSelected: basicDropdownValue" />
+        <finys-validation>Please select a value</finys-validation>
+      </div>
 
       <input is="finys-dropdown-list" class="my-dropdown" data-text-field="name" data-bind="value: groupDropdownValue,
                             source: groupListData, 
@@ -68,7 +70,7 @@
     <h1>Time Picker</h1>
     <div style="width: 15rem">
       <input id="my-timepicker" is="finys-timepicker" class="" data-bind="value: time, timepickerIsSelected: time" />
-      <finys-validation>this is a validation with a very long error message that should get cut off</finys-validation>
+      <finys-validation for="my-timepicker">this is a validation with a very long error message that should get cut off</finys-validation>
     </div>
   </section>
 
