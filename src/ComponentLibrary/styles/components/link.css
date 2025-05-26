@@ -1,0 +1,48 @@
+.f-link {
+    color: var(--primary);
+    text-decoration: underline;
+    font-size: 1rem;
+    width: max-content;
+    text-underline-offset: 0.3em;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+}
+
+.f-link:has(i) {
+    text-decoration: none;
+}
+
+.f-link:has(i) span {
+    text-decoration: underline;
+}
+
+.f-link:hover {
+    color: var(--primary-dark)
+}
+
+.f-link-destructive {
+    color: var(--error);
+}
+
+.f-link-destructive:hover {
+    color: var(--error-dark);
+}
+
+/* dark styles */
+
+.f-link.f-link-dark {
+    color: var(--neutral-white);
+}
+
+.f-link.f-link-dark:hover {
+    color: var(--primary-lighter);
+}
+
+.f-link.f-link-dark.f-link-destructive {
+    color: var(--error-light);
+}
+
+.f-link.f-link-dark.f-link-destructive:hover {
+    color: var(--error);
+}
