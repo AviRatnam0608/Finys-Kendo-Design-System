@@ -19,14 +19,36 @@ class Validation extends HTMLElement {
     }
 
     hide() {
+        this.unhighlightAssociatedElement();
         this.classList.add('f-hidden');
     }
 
+    setHighlightQuerySelector(selector) {
+        this.highlightQuerySelector = selector;
+    }
+
     highlightAssociatedElement() {
+        if(this.highlightQuerySelector) {
+            return document.querySelector(this.highlightQuerySelector)
+                .classList.add('f-error');
+        }
         if(this.for) {
-            return document.querySelector(`#${this.for}`).classList.add('f-error');
+            return document.querySelector(`#${this.for}`)
+                .classList.add('f-error');
         }
          return this.previousElementSibling.classList.add('f-error');
+    }
+
+    unhighlightAssociatedElement() {
+        if(this.highlightQuerySelector) {
+            return document.querySelector(this.highlightQuerySelector)
+                .classList.remove('f-error');
+        }
+        if(this.for) {
+            return document.querySelector(`#${this.for}`)
+                .classList.remove('f-error');
+        }
+         return this.previousElementSibling.classList.remove('f-error');
     }
 }
 
