@@ -145,16 +145,13 @@ class FNavbar extends HTMLElement {
     "settings",
   ];
 
-  static userInfo = [
-   { userName: "Lebron James",
+  static userInfo = { 
+    userName: "Lebron James",
     userRole: "Claims Manager",
-    userImg: "",
-    joinDate: "3/28/25"}
-  ]
-
-  // add static vars here
-  static navigationMainWrapper = document.createElement("div");
-
+    userImg: "https://randomuser.me/api/portraits/men/36.jpg",
+    joinDate: "3/28/2025"
+  }
+  
   constructor() {
     super();
 
@@ -199,14 +196,15 @@ class FNavbar extends HTMLElement {
   }
   
   // Making main Nav wrappper -> contains all nav item
-  static createMainNavWrapper(){
-    FNavbar.navigationMainWrapper = document.createElement("div");
-    FNavbar.navigationMainWrapper.classList.add("f-navigation-header-main");
-    FNavbar.navigationMainWrapper.setAttribute("data-role", "view");
-    FNavbar.navigationMainWrapper.setAttribute("id", "nav-header");
+  createMainNavWrapper() {
+    const navigationMainWrapper = document.createElement("div");
+    navigationMainWrapper.classList.add("f-navigation-header-main");
+    navigationMainWrapper.setAttribute("data-role", "view");
+    navigationMainWrapper.setAttribute("id", "nav-header");
+    return navigationMainWrapper;
   }
 
-  static buildlist(arr, parentUl){
+  buildlist(arr, parentUl){
       arr.forEach((item) => {
       const li = document.createElement("li");
       li.classList.add("f-navigation-item");
@@ -224,7 +222,7 @@ class FNavbar extends HTMLElement {
       } else {
         linkEl = document.createElement("span");
       }
-
+      
       linkEl.classList.add("f-navigation-link");
       linkEl.textContent = item.label;
       li.appendChild(linkEl);
@@ -234,11 +232,11 @@ class FNavbar extends HTMLElement {
         const subli = document.createElement("li");
         subUl.classList.add("f-quick-action-ul");
         subUl.appendChild(subli);
-        subli.appendChild(FNavbar._buildQuickActionsPanel(item));
+        subli.appendChild(this._buildQuickActionsPanel(item));
         li.appendChild(subUl);
       } else if (item.subitems && item.subitems.length) {
         const subUl = document.createElement("ul");
-        FNavbar.buildlist(item.subitems, subUl);
+        this.buildlist(item.subitems, subUl);
         li.appendChild(subUl);
       }
   
@@ -246,9 +244,11 @@ class FNavbar extends HTMLElement {
     });
   }
 
-  static _buildQuickActionsPanel(item){
-    const panel = `
-      <div class="f-quick-action-template">
+  _buildQuickActionsPanel(item){
+    const panel = document.createElement("div");
+    panel.classList.add("f-quick-action-template")
+
+    panel.innerHTML = `
         <div class="f-quick-action-items">
           <ul class="k-group k-menu-group k-menu-group-md" role="menu">
             ${item.subitems.map((subitem)=>{
@@ -279,12 +279,45 @@ class FNavbar extends HTMLElement {
             }).join("")}
           </ul>
         </div>
-      </div>
     `;
-    return document.createRange().createContextualFragment(panel);
+    return panel;
   }
 
-  static createNavigationMenuItems(thisElement){
+  _buildUserProfilePanel(userInfo){
+    const panel = document.createElement("div");
+    panel.classList.add("f-quick-action-template");
+
+    panel.innerHTML = `
+      <div class="f-user-profile-panel">
+        <div class="f-user-details-container">
+          <div class="f-user-details">
+            <img src="${userInfo.userImg}" alt="${userInfo.userName}" class="f-avatar f-user-details-avatar" />
+            <span>${userInfo.userName}</span>
+          </div>
+          <div class="f-user-details-role">
+            <span>${userInfo.userRole} | ${userInfo.joinDate}</span>
+          </div>
+        </div>
+        <div class="f-user-details-action-buttons">
+          <ul class="k-group k-menu-group k-menu-group-md" role="menu">
+            <li class="f-navigation-item k-item k-menu-item">
+              <a href="null" class="f-navigation-link k-link k-menu-link">
+                My Profile
+              </a>
+            </li>
+            <li class="f-navigation-item k-item k-menu-item">
+              <a href="null" class="f-navigation-link k-link k-menu-link">
+                Log Out
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    `
+    return panel;
+  }
+
+  createNavigationMenuItems(){
     const navigationOptions = document.createElement("div");
     navigationOptions.classList.add("f-navigation-options");
 
@@ -299,7 +332,7 @@ class FNavbar extends HTMLElement {
 
     // build the <ul id="nav-bar" ...>
     const ul = document.createElement("ul");
-    ul.id = thisElement.getAttribute("menu-id") || "nav-bar";
+    ul.id = this.getAttribute("menu-id") || "nav-bar";
     ul.setAttribute("data-role", "menu");
     ul.style.width = "100%";
 
@@ -307,30 +340,31 @@ class FNavbar extends HTMLElement {
     const navigationIconsWrapperSection = document.createElement("div");
     navigationIconsWrapperSection.classList.add("f-avatar-section");
 
-    FNavbar.buildlist(FNavbar.navBarMenuItems, ul);
+    this.buildlist(FNavbar.navBarMenuItems, ul);
     navigationOptionWrapper.appendChild(ul);
 
-    FNavbar.navigationMainWrapper.appendChild(navigationOptions);
     navigationOptions.appendChild(img);
     navigationOptions.appendChild(navigationOptionWrapper);
+
+    return navigationOptions;
   }
 
-  static createSearchAndProfileGroup(vm, iconsList, userName, userImgUrl) {
+  createSearchAndProfileGroup(vm, iconsList, userInfo) {
     const container = document.createElement("div");
     container.classList.add("finys-navbar-rhs-group");
 
     // 1) build the search+icon row
-    const searchRow = FNavbar._createSearchAndShortcutContainer(vm, iconsList);
+    const searchRow = this._createSearchAndShortcutContainer(vm, iconsList);
 
     // 2) build the avatar/profile
-    const avatarBox = FNavbar._createAvatarContainer(userName, userImgUrl);
+    const avatarBox = this._createAvatarContainer(userInfo);
 
     container.appendChild(searchRow);
     container.appendChild(avatarBox);
     return container;
   }
 
-  static _createSearchAndShortcutContainer(vm, iconsList) {
+  _createSearchAndShortcutContainer() {
     const wrapper = document.createElement("div");
     wrapper.classList.add("f-avatar-section");
 
@@ -369,41 +403,42 @@ class FNavbar extends HTMLElement {
     return wrapper;
   }
 
-  static _createAvatarContainer(userName, userImgUrl) {
+  _createAvatarContainer(userInfo) {
     const avatarContainer = document.createElement("div");
     avatarContainer.classList.add("f-avatar-container");
 
     const img = document.createElement("img");
     img.classList.add(
-      "f-avatar", "f-avatar-no-margin",
+      "f-avatar",
       "k-avatar", "k-avatar-solid-primary",
       "k-avatar-solid", "k-avatar-md", "k-rounded-full"
     );
-    img.src = userImgUrl;
+    img.src = userInfo.userImg;
     img.alt = "User Avatar";
 
-    // Make this a menu
-    const nameSpan = document.createElement("span");
-    nameSpan.classList.add("f-text-tiny", "f-weight-medium");
-    nameSpan.innerText = userName;
+    const ul = document.createElement("ul");
+    ul.id = this.getAttribute("menu-id") || "user-profile";
+    ul.setAttribute("data-role", "menu");
+    ul.style.width = "100%";
 
-    const caret = document.createElement("i");
-    caret.classList.add("ph-light", "ph-caret-down");
+    const li = document.createElement("li");
+    li.classList.add("f-navigation-item");
 
-    // const ul = document.createElement("ul");
-    // ul.id = thisElement.getAttribute("menu-id") || "nav-bar";
-    // ul.setAttribute("data-role", "menu");
-    // ul.style.width = "100%";
+    const userNameContainer = document.createElement("span");
+    userNameContainer.classList.add("f-navigation-link");
+    userNameContainer.textContent = userInfo.userName;
+    li.appendChild(userNameContainer);
 
-    // const subUl = document.createElement("ul");
-    // const subli = document.createElement("li");
-    // subUl.classList.add("f-quick-action-ul");
-    // subUl.appendChild(subli);
-    // subli.appendChild(FNavbar._buildQuickActionsPanel(item));
-    // li.appendChild(subUl);
+    const subUl = document.createElement("ul");
+    const subli = document.createElement("li");
+    subUl.classList.add("f-quick-action-ul");
+    subli.appendChild(this._buildUserProfilePanel(userInfo));
+    
+    ul.appendChild(li);
+    li.appendChild(subUl);
+    subUl.appendChild(subli);
 
-
-    avatarContainer.append(img, nameSpan, caret);
+    avatarContainer.append(img, ul);
     return avatarContainer;
   }
 
@@ -412,18 +447,19 @@ class FNavbar extends HTMLElement {
     // clear out any previous content
     this.innerHTML = "";
     
-    FNavbar.createMainNavWrapper();
-    FNavbar.createNavigationMenuItems(this);
+    const mainNavSection = this.createMainNavWrapper();
+    const navigationSection = this.createNavigationMenuItems();
 
-    const rightGroup = FNavbar.createSearchAndProfileGroup(
+    mainNavSection.appendChild(navigationSection);
+
+    const rightGroup = this.createSearchAndProfileGroup(
       this.vm,
       FNavbar.iconsList,
-      this.getAttribute("user-name"),
-      this.getAttribute("user-img")
+      FNavbar.userInfo
     );
-    FNavbar.navigationMainWrapper.appendChild(rightGroup);
+    mainNavSection.appendChild(rightGroup);
     
-    this.appendChild(FNavbar.navigationMainWrapper);
+    this.appendChild(mainNavSection);
   }
 }
 
@@ -465,9 +501,6 @@ class FHeaderSearchElementDropdown extends HTMLInputElement {
     this.setAttribute("data-role", "dropdownlist");
     this.setAttribute("data-auto-bind", "false");
     this.setAttribute("data-value-primitive", "true");
-    // this.setAttribute('data-text-field', this.getAttribute('data-text-field') || "Name");
-    // this.setAttribute('data-value-field', this.getAttribute('data-value-field') || "Id");
-    // this.setAttribute('data-bind', this.getAttribute('data-bind') || "value: selectedName, source: dummyDropdownData" );
 
     this.setAttribute("data-text-field", "Name");
     this.setAttribute("data-value-field", "Id");
