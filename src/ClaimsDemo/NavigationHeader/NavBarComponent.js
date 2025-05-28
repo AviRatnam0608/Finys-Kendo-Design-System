@@ -199,7 +199,7 @@ class FNavbar extends HTMLElement {
     this.setAttribute("id", "nav-header");
   }
 
-  buildlist(arr, parentUl){
+  buildMenu(arr, parentUl){
       arr.forEach((item) => {
       const li = document.createElement("li");
       li.classList.add("f-navigation-item");
@@ -224,14 +224,14 @@ class FNavbar extends HTMLElement {
 
       if(item.quickActions){
         const subUl = document.createElement("ul");
-        const subli = document.createElement("li");
+        const subLi = document.createElement("li");
         subUl.classList.add("f-quick-action-ul");
-        subUl.appendChild(subli);
-        subli.appendChild(this._buildQuickActionsPanel(item));
+        subUl.appendChild(subLi);
+        subLi.appendChild(this._buildQuickActionsPanel(item));
         li.appendChild(subUl);
-      } else if (item.subitems && item.subitems.length) {
+      } else if (item.subitems?.length) {
         const subUl = document.createElement("ul");
-        this.buildlist(item.subitems, subUl);
+        this.buildMenu(item.subitems, subUl);
         li.appendChild(subUl);
       }
   
@@ -335,7 +335,7 @@ class FNavbar extends HTMLElement {
     const navigationIconsWrapperSection = document.createElement("div");
     navigationIconsWrapperSection.classList.add("f-avatar-section");
 
-    this.buildlist(FNavbar.navBarMenuItems, ul);
+    this.buildMenu(FNavbar.navBarMenuItems, ul);
     navigationOptionWrapper.appendChild(ul);
 
     navigationOptions.appendChild(img);
