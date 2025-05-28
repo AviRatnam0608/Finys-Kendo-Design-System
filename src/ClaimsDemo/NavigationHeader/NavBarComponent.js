@@ -227,7 +227,7 @@ class FNavbar extends HTMLElement {
         const subLi = document.createElement("li");
         subUl.classList.add("f-quick-action-ul");
         subUl.appendChild(subLi);
-        subLi.appendChild(this._buildQuickActionsPanel(item));
+        subLi.appendChild(FNavbar.#buildQuickActionsPanel(item));
         li.appendChild(subUl);
       } else if (item.subitems?.length) {
         const subUl = document.createElement("ul");
@@ -239,12 +239,12 @@ class FNavbar extends HTMLElement {
     });
   }
 
-  _buildQuickActionsPanel(item){
+  static #buildQuickActionsPanel(item){
     const panel = document.createElement("div");
     panel.classList.add("f-quick-action-template")
 
     panel.innerHTML = `
-        <div class="f-quick-action-items">
+        <div class="f-quick-action-sub-container">
           <ul class="k-group k-menu-group k-menu-group-md" role="menu">
             ${item.subitems.map((subitem)=>{
               return `
@@ -257,7 +257,7 @@ class FNavbar extends HTMLElement {
           </ul>
         </div>
 
-        <div class="f-quick-action-items f-quick-action-rhs f-border-rounded-right">
+        <div class="f-quick-action-sub-container f-quick-action-rhs f-border-rounded-right">
           <span class="f-quick-actions-title">Quick Actions</span>
           <ul style="list-style:none; margin:0; padding:0;">
             ${item.quickActions.map((subitem)=>{
@@ -278,7 +278,7 @@ class FNavbar extends HTMLElement {
     return panel;
   }
 
-  _buildUserProfilePanel(userInfo){
+  static #buildUserProfilePanel(userInfo){
     const panel = document.createElement("div");
     panel.classList.add("f-quick-action-template");
 
@@ -426,7 +426,7 @@ class FNavbar extends HTMLElement {
     const subUl = document.createElement("ul");
     const subli = document.createElement("li");
     subUl.classList.add("f-quick-action-ul");
-    subli.appendChild(this._buildUserProfilePanel(userInfo));
+    subli.appendChild(FNavbar.#buildUserProfilePanel(userInfo));
     
     ul.appendChild(li);
     li.appendChild(subUl);

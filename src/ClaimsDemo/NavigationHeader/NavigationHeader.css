@@ -257,7 +257,7 @@
   flex: 1 1 0;
 }
 
-.f-quick-action-items.f-quick-action-rhs {
+.f-quick-action-sub-container.f-quick-action-rhs {
   background-color: var(--neutral-ultra-light);
   margin-left: 2.563rem;
   display: flex;
@@ -282,11 +282,11 @@
   padding: 0;
 }
 
-.k-menu-popup .f-quick-action-ul .f-quick-action-items {
+.k-menu-popup .f-quick-action-ul .f-quick-action-sub-container {
   padding: 1rem 1.5rem;
 }
 
-.k-menu-popup .f-quick-action-ul .f-quick-action-items.f-quick-action-rhs {
+.k-menu-popup .f-quick-action-ul .f-quick-action-sub-container.f-quick-action-rhs {
   padding: 2.5rem 2.5rem 2.5rem 1.875rem;
 }
 
