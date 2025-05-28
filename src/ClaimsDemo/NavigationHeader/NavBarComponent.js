@@ -193,7 +193,7 @@ class FNavbar extends HTMLElement {
   }
   
   // Making main Nav wrappper -> contains all nav item
-  createMainNavWrapper() {
+  initNavProperties() {
     this.classList.add("f-navigation-header-main");
     this.setAttribute("data-role", "view");
     this.setAttribute("id", "nav-header");
@@ -244,7 +244,7 @@ class FNavbar extends HTMLElement {
     panel.classList.add("f-quick-action-template")
 
     panel.innerHTML = `
-        <div class="f-quick-action-sub-container">
+        <div class="f-navigation-menu-container">
           <ul class="k-group k-menu-group k-menu-group-md" role="menu">
             ${item.subitems.map((subitem)=>{
               return `
@@ -257,7 +257,7 @@ class FNavbar extends HTMLElement {
           </ul>
         </div>
 
-        <div class="f-quick-action-sub-container f-quick-action-rhs f-border-rounded-right">
+        <div class="f-navigation-menu-container f-quick-actions-container f-border-rounded-right">
           <span class="f-quick-actions-title">Quick Actions</span>
           <ul style="list-style:none; margin:0; padding:0;">
             ${item.quickActions.map((subitem)=>{
@@ -437,11 +437,8 @@ class FNavbar extends HTMLElement {
   }
 
 
-  render() {
-    // clear out any previous content
-    this.innerHTML = "";
-    
-    this.createMainNavWrapper();
+  render() {    
+    this.initNavProperties();
     const navigationSection = this.createNavigationMenuItems();
 
     this.appendChild(navigationSection);

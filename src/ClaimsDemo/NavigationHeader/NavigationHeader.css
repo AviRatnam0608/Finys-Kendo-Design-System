@@ -163,6 +163,10 @@
   border: none !important;
 }
 
+.f-header-search-input-textbox.k-input-solid:focus-within {
+  box-shadow: none !important;
+}
+
 .f-search-input .k-input-solid.k-input:focus {
   box-shadow: none !important;
   border-color: transparent !important;
@@ -257,7 +261,7 @@
   flex: 1 1 0;
 }
 
-.f-quick-action-sub-container.f-quick-action-rhs {
+.f-navigation-menu-container.f-quick-actions-container {
   background-color: var(--neutral-ultra-light);
   margin-left: 2.563rem;
   display: flex;
@@ -282,11 +286,11 @@
   padding: 0;
 }
 
-.k-menu-popup .f-quick-action-ul .f-quick-action-sub-container {
+.k-menu-popup .f-quick-action-ul .f-navigation-menu-container {
   padding: 1rem 1.5rem;
 }
 
-.k-menu-popup .f-quick-action-ul .f-quick-action-sub-container.f-quick-action-rhs {
+.k-menu-popup .f-quick-action-ul .f-navigation-menu-container.f-quick-actions-container {
   padding: 2.5rem 2.5rem 2.5rem 1.875rem;
 }
 
