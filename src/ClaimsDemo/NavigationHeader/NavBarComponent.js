@@ -204,47 +204,52 @@ class FNavbar extends HTMLElement {
     return navigationMainWrapper;
   }
 
-  buildlist(arr, parentUl){
-      arr.forEach((item) => {
-      const li = document.createElement("li");
-      li.classList.add("f-navigation-item");
-
-      let linkEl;
-      if (item.route) {
-        linkEl = document.createElement("a");
-        linkEl.href = item.route;
-
-        // Intercept clicks for client-side routing:
-        linkEl.addEventListener("click", (e) => {
-          e.preventDefault();
-          console.log("click evbent", item.route);
-        });
-      } else {
-        linkEl = document.createElement("span");
+  static buildNav(items) {
+    const navList = document.createElement('ul');
+    items.forEach((item) => {
+      const navItem = document.createElement("li");
+      navItem.classList.add("f-navigation-item");
+      const linkElement = this.buildNavItem(item);
+      navItem.appendChild(linkElement);
+      if(item.quickActions?.length && item.subitems?.length) {
+        navItem.appendChild(this.buildMenuWithQuickActions(item));
+      } else if(item.subitems?.length) {
+        navItem.appendChild(this.buildNav(item.subitems));
       }
-      
-      linkEl.classList.add("f-navigation-link");
-      linkEl.textContent = item.label;
-      li.appendChild(linkEl);
-
-      if(item.quickActions){
-        const subUl = document.createElement("ul");
-        const subli = document.createElement("li");
-        subUl.classList.add("f-quick-action-ul");
-        subUl.appendChild(subli);
-        subli.appendChild(this._buildQuickActionsPanel(item));
-        li.appendChild(subUl);
-      } else if (item.subitems && item.subitems.length) {
-        const subUl = document.createElement("ul");
-        this.buildlist(item.subitems, subUl);
-        li.appendChild(subUl);
-      }
-  
-      parentUl.appendChild(li);
-    });
+      navList.appendChild(navItem);
+    })
+    return navList;
   }
 
-  _buildQuickActionsPanel(item){
+  static buildNavItem(item) {
+    let linkElement;
+    if(!item.route) {
+      linkElement = document.createElement('span');
+    } else {
+      linkElement = document.createElement("a");
+      linkElement.href = item.route;
+  
+      // Intercept clicks for client-side routing:
+      linkElement.addEventListener("click", (e) => {
+        e.preventDefault();
+        console.log("click evbent", item.route);
+      });
+    }
+    linkElement.classList.add('f-navigation-link');
+    linkElement.textContent = item.label;
+    return linkElement;
+  }
+
+  static buildMenuWithQuickActions(item) {
+    const subUl = document.createElement("ul");
+    const subli = document.createElement("li");
+    subUl.classList.add("f-quick-action-ul");
+    subUl.appendChild(subli);
+    subli.appendChild(this.buildQuickActionsPanel(item));
+    return subUl;
+  }
+
+  static buildQuickActionsPanel(item){
     const panel = document.createElement("div");
     panel.classList.add("f-quick-action-template")
 
@@ -330,18 +335,15 @@ class FNavbar extends HTMLElement {
     const navigationOptionWrapper = document.createElement("div");
     navigationOptionWrapper.classList.add("f-navigation", "f-desktop-nav");
 
-    // build the <ul id="nav-bar" ...>
-    const ul = document.createElement("ul");
-    ul.id = this.getAttribute("menu-id") || "nav-bar";
-    ul.setAttribute("data-role", "menu");
-    ul.style.width = "100%";
-
     // Start of the RHS side of the nav bar
     const navigationIconsWrapperSection = document.createElement("div");
     navigationIconsWrapperSection.classList.add("f-avatar-section");
 
-    this.buildlist(FNavbar.navBarMenuItems, ul);
-    navigationOptionWrapper.appendChild(ul);
+    const navList = this.constructor.buildNav(this.constructor.navBarMenuItems);
+    navList.id = this.getAttribute("menu-id") || "nav-bar";
+    navList.setAttribute("data-role", "menu");
+    navList.style.width = "100%";
+    navigationOptionWrapper.appendChild(navList);
 
     navigationOptions.appendChild(img);
     navigationOptions.appendChild(navigationOptionWrapper);
