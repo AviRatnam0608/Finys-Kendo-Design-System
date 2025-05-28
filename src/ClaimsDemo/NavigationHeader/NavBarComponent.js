@@ -145,16 +145,13 @@ class FNavbar extends HTMLElement {
     "settings",
   ];
 
-  static userInfo = [
-   { userName: "Lebron James",
+  static userInfo = { 
+    userName: "Lebron James",
     userRole: "Claims Manager",
-    userImg: "",
-    joinDate: "3/28/25"}
-  ]
-
-  // add static vars here
-  static navigationMainWrapper = document.createElement("div");
-
+    userImg: "https://randomuser.me/api/portraits/men/36.jpg",
+    joinDate: "3/28/2025"
+  }
+  
   constructor() {
     super();
 
@@ -192,21 +189,17 @@ class FNavbar extends HTMLElement {
   connectedCallback() {
     // initial render
     this.render();
-    const searchSection = this.querySelector("#nav-header");
-    if (searchSection) {
-      kendo.bind(searchSection, this.vm);
-    }
+    kendo.bind($(this), this.vm);
   }
   
   // Making main Nav wrappper -> contains all nav item
-  static createMainNavWrapper(){
-    FNavbar.navigationMainWrapper = document.createElement("div");
-    FNavbar.navigationMainWrapper.classList.add("f-navigation-header-main");
-    FNavbar.navigationMainWrapper.setAttribute("data-role", "view");
-    FNavbar.navigationMainWrapper.setAttribute("id", "nav-header");
+  initNavProperties() {
+    this.classList.add("f-navigation-header-main");
+    this.setAttribute("data-role", "view");
+    this.setAttribute("id", "nav-header");
   }
 
-  static buildlist(arr, parentUl){
+  buildMenu(arr, parentUl){
       arr.forEach((item) => {
       const li = document.createElement("li");
       li.classList.add("f-navigation-item");
@@ -224,21 +217,21 @@ class FNavbar extends HTMLElement {
       } else {
         linkEl = document.createElement("span");
       }
-
+      
       linkEl.classList.add("f-navigation-link");
       linkEl.textContent = item.label;
       li.appendChild(linkEl);
 
       if(item.quickActions){
         const subUl = document.createElement("ul");
-        const subli = document.createElement("li");
+        const subLi = document.createElement("li");
         subUl.classList.add("f-quick-action-ul");
-        subUl.appendChild(subli);
-        subli.appendChild(FNavbar._buildQuickActionsPanel(item));
+        subUl.appendChild(subLi);
+        subLi.appendChild(FNavbar.#buildQuickActionsPanel(item));
         li.appendChild(subUl);
-      } else if (item.subitems && item.subitems.length) {
+      } else if (item.subitems?.length) {
         const subUl = document.createElement("ul");
-        FNavbar.buildlist(item.subitems, subUl);
+        this.buildMenu(item.subitems, subUl);
         li.appendChild(subUl);
       }
   
@@ -246,10 +239,12 @@ class FNavbar extends HTMLElement {
     });
   }
 
-  static _buildQuickActionsPanel(item){
-    const panel = `
-      <div class="f-quick-action-template">
-        <div class="f-quick-action-items">
+  static #buildQuickActionsPanel(item){
+    const panel = document.createElement("div");
+    panel.classList.add("f-quick-action-template")
+
+    panel.innerHTML = `
+        <div class="f-navigation-menu-container">
           <ul class="k-group k-menu-group k-menu-group-md" role="menu">
             ${item.subitems.map((subitem)=>{
               return `
@@ -262,7 +257,7 @@ class FNavbar extends HTMLElement {
           </ul>
         </div>
 
-        <div class="f-quick-action-items f-quick-action-rhs f-border-rounded-right">
+        <div class="f-navigation-menu-container f-quick-actions-container f-border-rounded-right">
           <span class="f-quick-actions-title">Quick Actions</span>
           <ul style="list-style:none; margin:0; padding:0;">
             ${item.quickActions.map((subitem)=>{
@@ -279,12 +274,45 @@ class FNavbar extends HTMLElement {
             }).join("")}
           </ul>
         </div>
-      </div>
     `;
-    return document.createRange().createContextualFragment(panel);
+    return panel;
   }
 
-  static createNavigationMenuItems(thisElement){
+  static #buildUserProfilePanel(userInfo){
+    const panel = document.createElement("div");
+    panel.classList.add("f-quick-action-template");
+
+    panel.innerHTML = `
+      <div class="f-user-profile-panel">
+        <div class="f-user-details-container">
+          <div class="f-user-details">
+            <img src="${userInfo.userImg}" alt="${userInfo.userName}" class="f-avatar f-user-details-avatar" />
+            <span>${userInfo.userName}</span>
+          </div>
+          <div class="f-user-details-role">
+            <span>${userInfo.userRole} | ${userInfo.joinDate}</span>
+          </div>
+        </div>
+        <div class="f-user-details-action-buttons">
+          <ul class="k-group k-menu-group k-menu-group-md" role="menu">
+            <li class="f-navigation-item k-item k-menu-item">
+              <a href="null" class="f-navigation-link k-link k-menu-link">
+                My Profile
+              </a>
+            </li>
+            <li class="f-navigation-item k-item k-menu-item">
+              <a href="null" class="f-navigation-link k-link k-menu-link">
+                Log Out
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    `
+    return panel;
+  }
+
+  createNavigationMenuItems(){
     const navigationOptions = document.createElement("div");
     navigationOptions.classList.add("f-navigation-options");
 
@@ -299,7 +327,7 @@ class FNavbar extends HTMLElement {
 
     // build the <ul id="nav-bar" ...>
     const ul = document.createElement("ul");
-    ul.id = thisElement.getAttribute("menu-id") || "nav-bar";
+    ul.id = this.getAttribute("menu-id") || "navbar";
     ul.setAttribute("data-role", "menu");
     ul.style.width = "100%";
 
@@ -307,30 +335,31 @@ class FNavbar extends HTMLElement {
     const navigationIconsWrapperSection = document.createElement("div");
     navigationIconsWrapperSection.classList.add("f-avatar-section");
 
-    FNavbar.buildlist(FNavbar.navBarMenuItems, ul);
+    this.buildMenu(FNavbar.navBarMenuItems, ul);
     navigationOptionWrapper.appendChild(ul);
 
-    FNavbar.navigationMainWrapper.appendChild(navigationOptions);
     navigationOptions.appendChild(img);
     navigationOptions.appendChild(navigationOptionWrapper);
+
+    return navigationOptions;
   }
 
-  static createSearchAndProfileGroup(vm, iconsList, userName, userImgUrl) {
+  createSearchAndProfileGroup(vm, iconsList, userInfo) {
     const container = document.createElement("div");
     container.classList.add("finys-navbar-rhs-group");
 
     // 1) build the search+icon row
-    const searchRow = FNavbar._createSearchAndShortcutContainer(vm, iconsList);
+    const searchRow = this._createSearchAndShortcutContainer(vm, iconsList);
 
     // 2) build the avatar/profile
-    const avatarBox = FNavbar._createAvatarContainer(userName, userImgUrl);
+    const avatarBox = this._createAvatarContainer(userInfo);
 
     container.appendChild(searchRow);
     container.appendChild(avatarBox);
     return container;
   }
 
-  static _createSearchAndShortcutContainer(vm, iconsList) {
+  _createSearchAndShortcutContainer() {
     const wrapper = document.createElement("div");
     wrapper.classList.add("f-avatar-section");
 
@@ -369,61 +398,57 @@ class FNavbar extends HTMLElement {
     return wrapper;
   }
 
-  static _createAvatarContainer(userName, userImgUrl) {
+  _createAvatarContainer(userInfo) {
     const avatarContainer = document.createElement("div");
     avatarContainer.classList.add("f-avatar-container");
 
     const img = document.createElement("img");
     img.classList.add(
-      "f-avatar", "f-avatar-no-margin",
+      "f-avatar",
       "k-avatar", "k-avatar-solid-primary",
       "k-avatar-solid", "k-avatar-md", "k-rounded-full"
     );
-    img.src = userImgUrl;
+    img.src = userInfo.userImg;
     img.alt = "User Avatar";
 
-    // Make this a menu
-    const nameSpan = document.createElement("span");
-    nameSpan.classList.add("f-text-tiny", "f-weight-medium");
-    nameSpan.innerText = userName;
+    const ul = document.createElement("ul");
+    ul.id = this.getAttribute("menu-id") || "user-profile";
+    ul.setAttribute("data-role", "menu");
 
-    const caret = document.createElement("i");
-    caret.classList.add("ph-light", "ph-caret-down");
+    const li = document.createElement("li");
+    li.classList.add("f-navigation-item");
 
-    // const ul = document.createElement("ul");
-    // ul.id = thisElement.getAttribute("menu-id") || "nav-bar";
-    // ul.setAttribute("data-role", "menu");
-    // ul.style.width = "100%";
+    const userNameContainer = document.createElement("span");
+    userNameContainer.classList.add("f-navigation-link");
+    userNameContainer.textContent = userInfo.userName;
+    li.appendChild(userNameContainer);
 
-    // const subUl = document.createElement("ul");
-    // const subli = document.createElement("li");
-    // subUl.classList.add("f-quick-action-ul");
-    // subUl.appendChild(subli);
-    // subli.appendChild(FNavbar._buildQuickActionsPanel(item));
-    // li.appendChild(subUl);
+    const subUl = document.createElement("ul");
+    const subli = document.createElement("li");
+    subUl.classList.add("f-quick-action-ul");
+    subli.appendChild(FNavbar.#buildUserProfilePanel(userInfo));
+    
+    ul.appendChild(li);
+    li.appendChild(subUl);
+    subUl.appendChild(subli);
 
-
-    avatarContainer.append(img, nameSpan, caret);
+    avatarContainer.append(img, ul);
     return avatarContainer;
   }
 
 
-  render() {
-    // clear out any previous content
-    this.innerHTML = "";
-    
-    FNavbar.createMainNavWrapper();
-    FNavbar.createNavigationMenuItems(this);
+  render() {    
+    this.initNavProperties();
+    const navigationSection = this.createNavigationMenuItems();
 
-    const rightGroup = FNavbar.createSearchAndProfileGroup(
+    this.appendChild(navigationSection);
+
+    const rightGroup = this.createSearchAndProfileGroup(
       this.vm,
       FNavbar.iconsList,
-      this.getAttribute("user-name"),
-      this.getAttribute("user-img")
+      FNavbar.userInfo
     );
-    FNavbar.navigationMainWrapper.appendChild(rightGroup);
-    
-    this.appendChild(FNavbar.navigationMainWrapper);
+    this.appendChild(rightGroup);
   }
 }
 
@@ -465,9 +490,6 @@ class FHeaderSearchElementDropdown extends HTMLInputElement {
     this.setAttribute("data-role", "dropdownlist");
     this.setAttribute("data-auto-bind", "false");
     this.setAttribute("data-value-primitive", "true");
-    // this.setAttribute('data-text-field', this.getAttribute('data-text-field') || "Name");
-    // this.setAttribute('data-value-field', this.getAttribute('data-value-field') || "Id");
-    // this.setAttribute('data-bind', this.getAttribute('data-bind') || "value: selectedName, source: dummyDropdownData" );
 
     this.setAttribute("data-text-field", "Name");
     this.setAttribute("data-value-field", "Id");
@@ -518,16 +540,40 @@ class FinysRecentlyViewedMenu extends HTMLButtonElement {
   ];
 
   connectedCallback() {
-      this.classList.add('f-recently-viewed')
-      this.setAttribute('data-role', 'dropdownbutton');
-      this.setAttribute('data-items', JSON.stringify(FinysRecentlyViewedMenu.test));
-      this.setAttribute('data-header-template',
-        '<div class="k-my-header">Recently viewed items</div>'
-      );
-      this.innerHTML = `
-        <i class="ph-light ph-clock-counter-clockwise"></i>
-      `
-      this.classList.add("f-icon-btn")
+    const tmplId = 'f-recently-viewed-template';
+
+    this.createRecentlyViewedTemplate(tmplId);
+
+    // 1) set up element
+    this.classList.add('f-recently-viewed', 'f-icon-btn');
+    this.setAttribute('data-role', 'dropdownbutton');
+    this.setAttribute('data-items', JSON.stringify(FinysRecentlyViewedMenu.test));
+
+    // 2) pick an ID for your template
+    this.setAttribute('data-template', tmplId);
+
+    // 3) your button’s icon
+    this.innerHTML = `<i class="ph-light ph-clock-counter-clockwise"></i>`;
+
+    // 4) build & append the <script> so Kendo can find it
+
+
+    // 5) finally, initialize the widget (imperative approach)
+    //    so it picks up your data-items + data-template
+    // kendo.init(this); 
+  }
+
+  createRecentlyViewedTemplate(tmplId){
+    const script = document.createElement('script');
+    script.setAttribute("id", tmplId);
+    script.setAttribute("type", "text/x-kendo-template")
+    script.innerHTML = `
+      <div class="f-recently-viewed-template">
+        <!-- you can use #: text #, #: icon # etc here -->
+        #= text # 9203402
+      </div>
+    `;
+    document.querySelector('body').appendChild(script);
   }
 }
 
@@ -595,7 +641,6 @@ class FinysSettingsMenu extends HTMLButtonElement {
 }
 
 
-customElements.define("finys-navbar", FNavbar);
 customElements.define(
   "f-header-search-container",
   FHeaderSearchElementContainer
@@ -609,6 +654,7 @@ customElements.define("f-header-search-input", FHeaderSearchElementInput, {
   extends: "input",
 });
 
+customElements.define("finys-navbar", FNavbar);
 
 customElements.define("f-recently-viewed-button", FinysRecentlyViewedMenu, {
   extends: "button",

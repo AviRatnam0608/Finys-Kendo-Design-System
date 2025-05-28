@@ -92,6 +92,15 @@
   padding: 0.5rem;
 }
 
+.f-dropdown-styles .k-icon.k-svg-icon:before {
+  font-family: "Phosphor";
+  content: "\e136";
+  font-size: var(--font-size-small);
+  font-weight: bold;
+  color: var(--neutral);
+  font-size: 0.875rem;
+}
+
 .f-options-dropdown {
   height: 50px;
   border: 1px solid var(--neutral-lighter);
@@ -122,6 +131,7 @@
 .f-icon-btn:hover{
   background: var(--primary-lightest);
   border-radius: 4px;
+  color: var(--neutral-darkest);
 }
 
 .ph.ph-caret-down,
@@ -146,11 +156,15 @@
 }
 
 .f-avatar-no-margin {
-  margin: 0;
+  margin: 0 !important;
 }
 
 .f-header-search-input-textbox {
   border: none !important;
+}
+
+.f-header-search-input-textbox.k-input-solid:focus-within {
+  box-shadow: none !important;
 }
 
 .f-search-input .k-input-solid.k-input:focus {
@@ -169,7 +183,7 @@
 .f-avatar-container {
   display: flex;
   align-items: center;
-  gap: 10px;
+  /* gap: 10px; */
   color: var(--neutral-darkest);
   white-space: nowrap;
 }
@@ -233,6 +247,11 @@
   padding: 0;
 }
 
+.f-navigation-link.k-link.k-menu-link:hover{
+  color: var(--neutral-darkest);
+  background-color: var(--neutral-lighest);
+}
+
 .k-menu-popup.k-popup .k-link.k-menu-link:hover{
   background-color: var(--primary-lightest);
   border-radius: 0.375rem;
@@ -242,7 +261,7 @@
   flex: 1 1 0;
 }
 
-.f-quick-action-items.f-quick-action-rhs {
+.f-navigation-menu-container.f-quick-actions-container {
   background-color: var(--neutral-ultra-light);
   margin-left: 2.563rem;
   display: flex;
@@ -267,11 +286,11 @@
   padding: 0;
 }
 
-.k-menu-popup .f-quick-action-ul .f-quick-action-items {
+.k-menu-popup .f-quick-action-ul .f-navigation-menu-container {
   padding: 1rem 1.5rem;
 }
 
-.k-menu-popup .f-quick-action-ul .f-quick-action-items.f-quick-action-rhs {
+.k-menu-popup .f-quick-action-ul .f-navigation-menu-container.f-quick-actions-container {
   padding: 2.5rem 2.5rem 2.5rem 1.875rem;
 }
 
@@ -287,6 +306,67 @@
 
 .f-quick-action-ul.k-group.k-menu-group.k-menu-group-md {
   border-radius: 6px;
+}
+
+.f-user-profile-panel {
+  background-color: var(--neutral-white);
+  min-width: 16.125rem;
+  border-radius: 0.375rem;
+
+  margin-top: 1.25rem;
+  position: absolute;
+  right: -7.625rem;
+
+  box-shadow: 0px 20px 20px 0px #00000006, 
+  0px 11px 11px 0px #00000012, 
+  0px 6px 12px 0px #1315190D, 
+  0px 4px 4px 0px #00000006,
+  0px 1px 1px 0px #00000003,
+  0px 2px 2px 0px #00000005;
+
+}
+
+.f-user-details-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-left: 1.25rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+
+  border-bottom: 1px solid var(--neutral-lighter);
+}
+
+.f-user-details-action-buttons {
+  padding-left: 1.5rem;
+  padding-bottom: 1.5rem;
+  padding-top: 1.25rem;
+  padding-right: 3.438rem;
+}
+
+.f-user-details {
+  display: flex;
+  align-items: center;
+}
+
+.f-user-details span {
+  font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-500);
+  color: var(--neutral-darkest);
+}
+
+.f-user-details-role {
+  color: var(--neutral-dark);
+  font-weight: var(--font-weight-500);
+}
+
+.f-user-details-avatar {
+  width: 2rem;
+  border-radius: 50%;
+}
+
+.k-svg-icon>svg {
+  display: none;
 }
 
 /* Small screen styles */

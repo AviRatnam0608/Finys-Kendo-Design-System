@@ -11,10 +11,6 @@ class NavbarPreview extends HTMLElement {
     }
 
     init() {
-        this.navbar.setAttribute('user-name', 'Lebron James');
-        this.navbar.setAttribute('user-img', 'https://randomuser.me/api/portraits/men/36.jpg');
-        this.unattachedNavbar.setAttribute('user-name', 'Lebron James');
-        this.unattachedNavbar.setAttribute('user-img', 'https://randomuser.me/api/portraits/men/36.jpg');
         customElements.whenDefined('finys-code-viewer')
             .then(() => {
                 this.updateCodeViewer();
