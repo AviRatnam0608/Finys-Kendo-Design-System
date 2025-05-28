@@ -327,7 +327,7 @@ class FNavbar extends HTMLElement {
 
     // build the <ul id="nav-bar" ...>
     const ul = document.createElement("ul");
-    ul.id = this.getAttribute("menu-id") || "nav-bar";
+    ul.id = this.getAttribute("menu-id") || "navbar";
     ul.setAttribute("data-role", "menu");
     ul.style.width = "100%";
 
@@ -414,7 +414,6 @@ class FNavbar extends HTMLElement {
     const ul = document.createElement("ul");
     ul.id = this.getAttribute("menu-id") || "user-profile";
     ul.setAttribute("data-role", "menu");
-    ul.style.width = "100%";
 
     const li = document.createElement("li");
     li.classList.add("f-navigation-item");
