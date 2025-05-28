@@ -194,11 +194,9 @@ class FNavbar extends HTMLElement {
   
   // Making main Nav wrappper -> contains all nav item
   createMainNavWrapper() {
-    const navigationMainWrapper = document.createElement("div");
-    navigationMainWrapper.classList.add("f-navigation-header-main");
-    navigationMainWrapper.setAttribute("data-role", "view");
-    navigationMainWrapper.setAttribute("id", "nav-header");
-    return navigationMainWrapper;
+    this.classList.add("f-navigation-header-main");
+    this.setAttribute("data-role", "view");
+    this.setAttribute("id", "nav-header");
   }
 
   buildlist(arr, parentUl){
@@ -444,19 +442,17 @@ class FNavbar extends HTMLElement {
     // clear out any previous content
     this.innerHTML = "";
     
-    const mainNavSection = this.createMainNavWrapper();
+    this.createMainNavWrapper();
     const navigationSection = this.createNavigationMenuItems();
 
-    mainNavSection.appendChild(navigationSection);
+    this.appendChild(navigationSection);
 
     const rightGroup = this.createSearchAndProfileGroup(
       this.vm,
       FNavbar.iconsList,
       FNavbar.userInfo
     );
-    mainNavSection.appendChild(rightGroup);
-    
-    this.appendChild(mainNavSection);
+    this.appendChild(rightGroup);
   }
 }
 
