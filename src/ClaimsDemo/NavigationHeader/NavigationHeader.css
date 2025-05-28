@@ -92,6 +92,15 @@
   padding: 0.5rem;
 }
 
+.f-dropdown-styles .k-icon.k-svg-icon:before {
+  font-family: "Phosphor";
+  content: "\e136";
+  font-size: var(--font-size-small);
+  font-weight: bold;
+  color: var(--neutral);
+  font-size: 0.875rem;
+}
+
 .f-options-dropdown {
   height: 50px;
   border: 1px solid var(--neutral-lighter);
@@ -122,6 +131,7 @@
 .f-icon-btn:hover{
   background: var(--primary-lightest);
   border-radius: 4px;
+  color: var(--neutral-darkest);
 }
 
 .ph.ph-caret-down,

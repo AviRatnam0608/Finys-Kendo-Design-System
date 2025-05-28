@@ -189,10 +189,7 @@ class FNavbar extends HTMLElement {
   connectedCallback() {
     // initial render
     this.render();
-    const searchSection = this.querySelector("#nav-header");
-    if (searchSection) {
-      kendo.bind(searchSection, this.vm);
-    }
+    kendo.bind($(this), this.vm);
   }
   
   // Making main Nav wrappper -> contains all nav item
@@ -551,16 +548,40 @@ class FinysRecentlyViewedMenu extends HTMLButtonElement {
   ];
 
   connectedCallback() {
-      this.classList.add('f-recently-viewed')
-      this.setAttribute('data-role', 'dropdownbutton');
-      this.setAttribute('data-items', JSON.stringify(FinysRecentlyViewedMenu.test));
-      this.setAttribute('data-header-template',
-        '<div class="k-my-header">Recently viewed items</div>'
-      );
-      this.innerHTML = `
-        <i class="ph-light ph-clock-counter-clockwise"></i>
-      `
-      this.classList.add("f-icon-btn")
+    const tmplId = 'f-recently-viewed-template';
+
+    this.createRecentlyViewedTemplate(tmplId);
+
+    // 1) set up element
+    this.classList.add('f-recently-viewed', 'f-icon-btn');
+    this.setAttribute('data-role', 'dropdownbutton');
+    this.setAttribute('data-items', JSON.stringify(FinysRecentlyViewedMenu.test));
+
+    // 2) pick an ID for your template
+    this.setAttribute('data-template', tmplId);
+
+    // 3) your button’s icon
+    this.innerHTML = `<i class="ph-light ph-clock-counter-clockwise"></i>`;
+
+    // 4) build & append the <script> so Kendo can find it
+
+
+    // 5) finally, initialize the widget (imperative approach)
+    //    so it picks up your data-items + data-template
+    // kendo.init(this); 
+  }
+
+  createRecentlyViewedTemplate(tmplId){
+    const script = document.createElement('script');
+    script.setAttribute("id", tmplId);
+    script.setAttribute("type", "text/x-kendo-template")
+    script.innerHTML = `
+      <div class="f-recently-viewed-template">
+        <!-- you can use #: text #, #: icon # etc here -->
+        #= text # 9203402
+      </div>
+    `;
+    document.querySelector('body').appendChild(script);
   }
 }
 
@@ -628,7 +649,6 @@ class FinysSettingsMenu extends HTMLButtonElement {
 }
 
 
-customElements.define("finys-navbar", FNavbar);
 customElements.define(
   "f-header-search-container",
   FHeaderSearchElementContainer
@@ -642,6 +662,7 @@ customElements.define("f-header-search-input", FHeaderSearchElementInput, {
   extends: "input",
 });
 
+customElements.define("finys-navbar", FNavbar);
 
 customElements.define("f-recently-viewed-button", FinysRecentlyViewedMenu, {
   extends: "button",

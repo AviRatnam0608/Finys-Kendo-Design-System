@@ -60,7 +60,8 @@ class FinysFeaturePreview extends HTMLElement {
             </div>
             <finys-code-viewer></finys-code-viewer>
         `
-        
+        const navbar = document.querySelector('finys-navbar');
+        kendo.bind($('.f-action-icons-container'), navbar.vm);
     }
 
     renderCheckbox() {
